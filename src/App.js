@@ -16,6 +16,7 @@ import ContactUs from './pages/ContactUs';
 import EmailSent from './pages/EmailSent';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AdminDashboard from './pages/AdminDashboard';
 
 // Theme
 const theme = createTheme({
@@ -25,7 +26,7 @@ const theme = createTheme({
 // Navigation
 const Navigation = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, isAdmin } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -54,16 +55,28 @@ const Navigation = () => {
         </Typography>
         <Box sx={{ display: 'flex', gap: 1 }}>
           <Button color="inherit" onClick={() => navigate('/')}>Home</Button>
-          <Button color="inherit" onClick={handleStartProjectClick}>
-            Start Project
-          </Button>
-          <Button color="inherit" onClick={() => navigate('/about')}>About Us</Button>
-          <Button color="inherit" onClick={() => navigate('/contact')}>Contact</Button>
+          
+          {/* Show different navigation based on user role */}
+          {user && isAdmin() ? (
+            <>
+              <Button color="inherit" onClick={() => navigate('/admin')}>Admin Dashboard</Button>
+              <Button color="inherit" onClick={() => navigate('/about')}>About Us</Button>
+              <Button color="inherit" onClick={() => navigate('/contact')}>Contact</Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit" onClick={handleStartProjectClick}>
+                Start Project
+              </Button>
+              <Button color="inherit" onClick={() => navigate('/about')}>About Us</Button>
+              <Button color="inherit" onClick={() => navigate('/contact')}>Contact</Button>
+            </>
+          )}
 
           {user ? (
             <>
               <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-                Welcome, {user.email}
+                Welcome, {user.email} {isAdmin() && '(Admin)'}
               </Typography>
               <Button color="inherit" onClick={handleLogout}>Logout</Button>
             </>
@@ -83,6 +96,21 @@ const Navigation = () => {
 const PrivateRoute = ({ children }) => {
   const { user } = useAuth();
   return user ? children : <Navigate to="/login" replace />;
+};
+
+// Admin Route Component
+const AdminRoute = ({ children }) => {
+  const { user, isAdmin } = useAuth();
+  
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  if (!isAdmin()) {
+    return <Navigate to="/" replace />;
+  }
+  
+  return children;
 };
 
 // App
@@ -116,6 +144,16 @@ function App() {
                 <PrivateRoute>
                   <Completed />
                 </PrivateRoute>
+              } 
+            />
+
+            {/* Admin Only Routes */}
+            <Route 
+              path="/admin" 
+              element={
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
               } 
             />
           </Routes>

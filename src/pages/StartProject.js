@@ -15,16 +15,19 @@ import { firebaseService } from '../services/FirebaseService';
 
 const StartProject = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, isCustomer, isAdmin } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Redirect to login if user is not authenticated
+  // Redirect based on user role and authentication status
   React.useEffect(() => {
     if (!user) {
       navigate('/login');
+    } else if (isAdmin()) {
+      // Redirect admins to their dashboard
+      navigate('/admin');
     }
-  }, [user, navigate]);
+  }, [user, isAdmin, navigate]);
 
   const [formData, setFormData] = useState({
     First_Name: '',
@@ -43,7 +46,7 @@ const StartProject = () => {
 
   const [formErrors, setFormErrors] = useState({});
 
-  // Don't render the form if user is not logged in
+  // Don't render the form if user is not logged in or is an admin
   if (!user) {
     return (
       <Container maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
@@ -67,6 +70,37 @@ const StartProject = () => {
               onClick={() => navigate('/register')}
             >
               Create Account
+            </Button>
+          </Box>
+        </Paper>
+      </Container>
+    );
+  }
+
+  // Block admin users from accessing this page
+  if (isAdmin()) {
+    return (
+      <Container maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
+        <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
+          <Typography variant="h5" gutterBottom>
+            Access Restricted
+          </Typography>
+          <Typography variant="body1" color="text.secondary" paragraph>
+            Admin users cannot create projects. You can view existing projects from your dashboard.
+          </Typography>
+          <Box sx={{ mt: 3 }}>
+            <Button
+              variant="contained"
+              onClick={() => navigate('/admin')}
+              sx={{ mr: 2 }}
+            >
+              Go to Admin Dashboard
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => navigate('/')}
+            >
+              Go Home
             </Button>
           </Box>
         </Paper>
@@ -114,6 +148,12 @@ const StartProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Double-check role before submission
+    if (!isCustomer()) {
+      setError('Only customer accounts can create projects.');
+      return;
+    }
+
     if (!validateForm()) return;
 
     setLoading(true);
@@ -206,17 +246,19 @@ const StartProject = () => {
               />
             </Grid>
 
-          <TextField
-  fullWidth
-  label="Email Address"
-  name="Email_Address"
-  type="email"
-  value={formData.Email_Address}
-  onChange={handleChange}
-  required
-  disabled={true}
-  helperText="Email address from your account"
-/>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Email Address"
+                name="Email_Address"
+                type="email"
+                value={formData.Email_Address}
+                onChange={handleChange}
+                required
+                disabled={true}
+                helperText="Email address from your account"
+              />
+            </Grid>
 
             <Grid item xs={12}>
               <TextField
