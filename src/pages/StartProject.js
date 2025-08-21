@@ -16,7 +16,7 @@ const StartProject = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const [formData, setFormData] = useState({
     First_Name: '',
     Last_Name: '',
@@ -32,7 +32,7 @@ const StartProject = () => {
     Company_Registration_Number: ''
   });
 
-const [formErrors, setFormErrors] = useState({});
+  const [formErrors, setFormErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,8 +40,7 @@ const [formErrors, setFormErrors] = useState({});
       ...prev,
       [name]: value
     }));
-    
-    // Clear error when user starts typing
+
     if (formErrors[name]) {
       setFormErrors(prev => ({
         ...prev,
@@ -63,7 +62,6 @@ const [formErrors, setFormErrors] = useState({});
       }
     });
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.Email_Address && !emailRegex.test(formData.Email_Address)) {
       errors.Email_Address = 'Please enter a valid email address';
@@ -76,15 +74,19 @@ const [formErrors, setFormErrors] = useState({});
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setLoading(true);
     setError('');
 
     try {
-      await firebaseService.saveClientInfoAsync(formData);
+      await firebaseService.saveClientInfoAsync({
+        ...formData,
+        // Remove userId requirement - save without user authentication
+        timestamp: new Date().toISOString(),
+        submittedAt: Date.now()
+      });
+      
       navigate('/completed');
     } catch (err) {
       setError('Failed to submit form. Please try again.');
@@ -98,9 +100,9 @@ const [formErrors, setFormErrors] = useState({});
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" component="h2" align="center" gutterBottom>
-          Your Company Information
+          Let's start your project!
         </Typography>
-        
+
         {error && (
           <Alert severity="error" sx={{ mb: 3 }}>
             {error}
@@ -110,7 +112,7 @@ const [formErrors, setFormErrors] = useState({});
         <Box component="form" onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             {/* Personal Information */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="First Name"
@@ -122,7 +124,8 @@ const [formErrors, setFormErrors] = useState({});
                 required
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Last Name"
@@ -135,8 +138,7 @@ const [formErrors, setFormErrors] = useState({});
               />
             </Grid>
 
-            {/* Contact Information */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Mobile Number"
@@ -148,19 +150,18 @@ const [formErrors, setFormErrors] = useState({});
                 required
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Phone Number"
                 name="Phone_Number"
                 value={formData.Phone_Number}
                 onChange={handleChange}
-                error={!!formErrors.Phone_Number}
-                helperText={formErrors.Phone_Number}
               />
             </Grid>
 
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Email Address"
@@ -173,11 +174,14 @@ const [formErrors, setFormErrors] = useState({});
                 required
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Physical Address"
                 name="Physical_Address"
+                multiline
+                rows={3}
                 value={formData.Physical_Address}
                 onChange={handleChange}
                 error={!!formErrors.Physical_Address}
@@ -186,32 +190,34 @@ const [formErrors, setFormErrors] = useState({});
               />
             </Grid>
 
-            {/* Address Information */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="PO Box"
                 name="PO_Box"
                 value={formData.PO_Box}
                 onChange={handleChange}
-                error={!!formErrors.PO_Box}
-                helperText={formErrors.PO_Box}
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Postal Code"
                 name="Postal_Code"
                 value={formData.Postal_Code}
                 onChange={handleChange}
-                error={!!formErrors.Postal_Code}
-                helperText={formErrors.Postal_Code}
               />
             </Grid>
 
             {/* Company Information */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
+              <Typography variant="h6" sx={{ mt: 2, mb: 2 }}>
+                Company Information
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Company Name"
@@ -223,38 +229,34 @@ const [formErrors, setFormErrors] = useState({});
                 required
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Company Type"
                 name="Company_Type"
                 value={formData.Company_Type}
                 onChange={handleChange}
-                error={!!formErrors.Company_Type}
-                helperText={formErrors.Company_Type}
               />
             </Grid>
 
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="VAT Number"
                 name="VAT_Number"
                 value={formData.VAT_Number}
                 onChange={handleChange}
-                error={!!formErrors.VAT_Number}
-                helperText={formErrors.VAT_Number}
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Company Registration Number"
                 name="Company_Registration_Number"
                 value={formData.Company_Registration_Number}
                 onChange={handleChange}
-                error={!!formErrors.Company_Registration_Number}
-                helperText={formErrors.Company_Registration_Number}
               />
             </Grid>
 
