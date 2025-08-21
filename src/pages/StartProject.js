@@ -10,19 +10,28 @@ import {
   Alert
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { firebaseService } from '../services/FirebaseService';
 
 const StartProject = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Redirect to login if user is not authenticated
+  React.useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
 
   const [formData, setFormData] = useState({
     First_Name: '',
     Last_Name: '',
     Mobile_Number: '',
     Phone_Number: '',
-    Email_Address: '',
+    Email_Address: user?.email || '',
     Physical_Address: '',
     PO_Box: '',
     Postal_Code: '',
@@ -33,6 +42,37 @@ const StartProject = () => {
   });
 
   const [formErrors, setFormErrors] = useState({});
+
+  // Don't render the form if user is not logged in
+  if (!user) {
+    return (
+      <Container maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
+        <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
+          <Typography variant="h5" gutterBottom>
+            Authentication Required
+          </Typography>
+          <Typography variant="body1" color="text.secondary" paragraph>
+            You need to be logged in to start a project.
+          </Typography>
+          <Box sx={{ mt: 3 }}>
+            <Button
+              variant="contained"
+              onClick={() => navigate('/login')}
+              sx={{ mr: 2 }}
+            >
+              Login
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => navigate('/register')}
+            >
+              Create Account
+            </Button>
+          </Box>
+        </Paper>
+      </Container>
+    );
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -82,7 +122,8 @@ const StartProject = () => {
     try {
       await firebaseService.saveClientInfoAsync({
         ...formData,
-        // Remove userId requirement - save without user authentication
+        userId: user.uid, // Associate project with logged-in user
+        userEmail: user.email,
         timestamp: new Date().toISOString(),
         submittedAt: Date.now()
       });
@@ -102,6 +143,10 @@ const StartProject = () => {
         <Typography variant="h4" component="h2" align="center" gutterBottom>
           Let's start your project!
         </Typography>
+
+        <Alert severity="success" sx={{ mb: 3 }}>
+          Welcome back, {user.email}! This project will be saved to your account.
+        </Alert>
 
         {error && (
           <Alert severity="error" sx={{ mb: 3 }}>
@@ -161,19 +206,17 @@ const StartProject = () => {
               />
             </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Email Address"
-                name="Email_Address"
-                type="email"
-                value={formData.Email_Address}
-                onChange={handleChange}
-                error={!!formErrors.Email_Address}
-                helperText={formErrors.Email_Address}
-                required
-              />
-            </Grid>
+          <TextField
+  fullWidth
+  label="Email Address"
+  name="Email_Address"
+  type="email"
+  value={formData.Email_Address}
+  onChange={handleChange}
+  required
+  disabled={true}
+  helperText="Email address from your account"
+/>
 
             <Grid item xs={12}>
               <TextField
