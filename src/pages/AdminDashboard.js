@@ -19,28 +19,37 @@ import {
   Alert,
   Card,
   CardContent,
-  Grid
+  Grid,
+  Tabs,
+  Tab,
+  Chip,
+  IconButton
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { database } from '../config/firebase';
-import { ref, get } from 'firebase/database';
+import { firebaseService } from '../services/FirebaseService';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import FolderIcon from '@mui/icons-material/Folder';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import BusinessIcon from '@mui/icons-material/Business';
+import EmailIcon from '@mui/icons-material/Email';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { user, isAdmin } = useAuth();
   const [projects, setProjects] = useState([]);
+  const [contactMessages, setContactMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedMessage, setSelectedMessage] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [messageDetailsOpen, setMessageDetailsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [statsVisible, setStatsVisible] = useState(false);
+  const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
@@ -52,7 +61,6 @@ const AdminDashboard = () => {
     };
   }, []);
 
-  // Redirect if not admin
   useEffect(() => {
     if (!user) {
       navigate('/login');
@@ -63,49 +71,94 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     if (user && isAdmin()) {
-      fetchProjects();
+      fetchData();
     }
   }, [user, isAdmin]);
 
-  const fetchProjects = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
-      const projectsRef = ref(database, 'clientInfo');
-      const snapshot = await get(projectsRef);
       
-      if (snapshot.exists()) {
-        const projectsData = snapshot.val();
-        const projectsList = Object.entries(projectsData).map(([id, data]) => ({
-          id,
-          ...data
-        }));
-        
-        projectsList.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-        setProjects(projectsList);
-      } else {
-        setProjects([]);
-      }
+      const projectsData = await firebaseService.getProjects();
+      projectsData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      setProjects(projectsData);
+      
+      const messagesData = await firebaseService.getContactForms();
+      messagesData.sort((a, b) => b.submittedAt - a.submittedAt);
+      setContactMessages(messagesData);
+      
     } catch (err) {
-      console.error('Error fetching projects:', err);
-      setError('Failed to load projects');
+      console.error('Error fetching data:', err);
+      setError('Failed to load dashboard data');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleViewDetails = (project) => {
+  const handleViewProjectDetails = (project) => {
     setSelectedProject(project);
     setDetailsOpen(true);
   };
 
-  const handleCloseDetails = () => {
+  const handleCloseProjectDetails = () => {
     setDetailsOpen(false);
     setSelectedProject(null);
   };
 
+  const handleViewMessage = (message) => {
+    setSelectedMessage(message);
+    setMessageDetailsOpen(true);
+  };
+
+  const handleCloseMessageDetails = () => {
+    setMessageDetailsOpen(false);
+    setSelectedMessage(null);
+  };
+
+  const handleMarkAsRead = async (messageId) => {
+    try {
+      await firebaseService.updateContactFormStatus(messageId, 'read');
+      setContactMessages(prev =>
+        prev.map(msg =>
+          msg.id === messageId ? { ...msg, status: 'read' } : msg
+        )
+      );
+    } catch (err) {
+      console.error('Error marking message as read:', err);
+      setError('Failed to update message status.');
+    }
+  };
+
+  const handleDeleteMessage = async (messageId) => {
+    if (!window.confirm('Are you sure you want to delete this message?')) {
+      return;
+    }
+
+    try {
+      await firebaseService.deleteContactForm(messageId);
+      setContactMessages(prev => prev.filter(msg => msg.id !== messageId));
+      if (selectedMessage?.id === messageId) {
+        handleCloseMessageDetails();
+      }
+    } catch (err) {
+      console.error('Error deleting message:', err);
+      setError('Failed to delete message.');
+    }
+  };
+
   const formatDate = (timestamp) => {
     if (!timestamp) return 'N/A';
-    return new Date(timestamp).toLocaleString();
+    return new Date(timestamp).toLocaleString('en-ZA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const getUnreadCount = () => {
+    return contactMessages.filter(msg => msg.status === 'unread').length;
   };
 
   if (!user || !isAdmin()) {
@@ -176,20 +229,21 @@ const AdminDashboard = () => {
       color: '#2c5530'
     },
     {
+      icon: <EmailIcon sx={{ fontSize: 32 }} />,
+      title: "Contact Messages",
+      value: contactMessages.length,
+      badge: getUnreadCount() > 0 ? getUnreadCount() : null,
+      gradient: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(44, 85, 48, 0.15) 100%)',
+      color: '#8b4513'
+    },
+    {
       icon: <TrendingUpIcon sx={{ fontSize: 32 }} />,
-      title: "Recent Projects (This Week)",
+      title: "Recent Projects",
       value: projects.filter(p => {
         const weekAgo = new Date();
         weekAgo.setDate(weekAgo.getDate() - 7);
         return new Date(p.timestamp) > weekAgo;
       }).length,
-      gradient: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(44, 85, 48, 0.15) 100%)',
-      color: '#8b4513'
-    },
-    {
-      icon: <BusinessIcon sx={{ fontSize: 32 }} />,
-      title: "Unique Companies",
-      value: new Set(projects.map(p => p.Company_Name)).size,
       gradient: 'linear-gradient(135deg, rgba(74, 124, 89, 0.15) 0%, rgba(107, 142, 107, 0.15) 100%)',
       color: '#4a7c59'
     }
@@ -285,7 +339,7 @@ const AdminDashboard = () => {
                 lineHeight: 1.5,
               }}
             >
-              Manage and monitor project submissions
+              Manage projects and customer communications
             </Typography>
           </Box>
         </Container>
@@ -354,9 +408,32 @@ const AdminDashboard = () => {
                         borderRadius: '50%',
                         background: stat.gradient,
                         color: stat.color,
+                        position: 'relative'
                       }}
                     >
                       {stat.icon}
+                      {stat.badge && (
+                        <Box
+                          sx={{
+                            position: 'absolute',
+                            top: -4,
+                            right: -4,
+                            background: 'linear-gradient(135deg, #f44336 0%, #e53935 100%)',
+                            color: 'white',
+                            borderRadius: '50%',
+                            width: 24,
+                            height: 24,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '0.7rem',
+                            fontWeight: 700,
+                            boxShadow: '0 2px 8px rgba(244, 67, 54, 0.4)'
+                          }}
+                        >
+                          {stat.badge}
+                        </Box>
+                      )}
                     </Box>
 
                     <Typography 
@@ -395,140 +472,336 @@ const AdminDashboard = () => {
                 borderRadius: 2,
                 background: 'linear-gradient(145deg, #fff5f5 0%, #ffe0e0 100%)',
               }}
+              onClose={() => setError('')}
             >
               {error}
             </Alert>
           )}
 
-          {/* Projects Table */}
-          <Paper 
-            elevation={0}
-            sx={{ 
-              mt: 4,
-              background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
-              borderRadius: 3,
-              border: '1px solid rgba(44, 85, 48, 0.08)',
-              overflow: 'hidden',
-              position: 'relative',
-              '&::before': {
-                content: '""',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: '3px',
-                background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
-                borderRadius: '12px 12px 0 0',
-              }
-            }}
-          >
-            <Box sx={{ p: 3 }}>
-              <Typography 
-                variant="h5" 
-                sx={{
-                  fontWeight: 700,
+          {/* Tabs */}
+          <Box sx={{ mt: 4 }}>
+            <Tabs
+              value={tabValue}
+              onChange={(e, newValue) => setTabValue(newValue)}
+              sx={{
+                mb: 3,
+                '& .MuiTab-root': {
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  fontSize: '1rem',
+                  minHeight: 48,
+                },
+                '& .Mui-selected': {
                   color: '#2c5530',
-                  mb: 0.5,
-                  fontSize: { xs: '1.3rem', md: '1.5rem' }
-                }}
-              >
-                Project Submissions
-              </Typography>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  color: '#666',
-                  fontSize: '0.9rem'
-                }}
-              >
-                All client project submissions in chronological order
-              </Typography>
-            </Box>
-
-            {loading ? (
-              <Box sx={{ p: 6, textAlign: 'center' }}>
-                <Typography sx={{ color: '#666' }}>Loading projects...</Typography>
-              </Box>
-            ) : projects.length === 0 ? (
-              <Box sx={{ p: 6, textAlign: 'center' }}>
-                <Typography sx={{ color: '#666' }}>
-                  No projects submitted yet.
-                </Typography>
-              </Box>
-            ) : (
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow 
-                      sx={{
-                        background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.05) 0%, rgba(212, 212, 170, 0.05) 100%)',
-                      }}
-                    >
-                      <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Name</TableCell>
-                      <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Company</TableCell>
-                      <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Email</TableCell>
-                      <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Submitted</TableCell>
-                      <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Actions</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {projects.map((project) => (
-                      <TableRow 
-                        key={project.id} 
-                        hover
+                },
+                '& .MuiTabs-indicator': {
+                  backgroundColor: '#2c5530',
+                  height: 3,
+                }
+              }}
+            >
+              <Tab label={`Projects (${projects.length})`} />
+              <Tab 
+                label={
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    Contact Messages ({contactMessages.length})
+                    {getUnreadCount() > 0 && (
+                      <Chip
+                        label={getUnreadCount()}
+                        size="small"
                         sx={{
-                          '&:hover': {
-                            background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.02) 0%, rgba(212, 212, 170, 0.02) 100%)',
-                          }
+                          height: 20,
+                          background: 'linear-gradient(135deg, #f44336 0%, #e53935 100%)',
+                          color: 'white',
+                          fontWeight: 700,
+                          fontSize: '0.7rem'
                         }}
-                      >
-                        <TableCell sx={{ color: '#333' }}>
-                          {project.First_Name} {project.Last_Name}
-                        </TableCell>
-                        <TableCell sx={{ color: '#333' }}>{project.Company_Name}</TableCell>
-                        <TableCell sx={{ color: '#666', fontSize: '0.9rem' }}>{project.Email_Address}</TableCell>
-                        <TableCell sx={{ color: '#666', fontSize: '0.9rem' }}>
-                          {formatDate(project.timestamp)}
-                        </TableCell>
-                        <TableCell>
-                          <Button
-                            size="small"
-                            onClick={() => handleViewDetails(project)}
-                            startIcon={<VisibilityIcon />}
+                      />
+                    )}
+                  </Box>
+                }
+              />
+            </Tabs>
+
+            {/* Projects Table */}
+            {tabValue === 0 && (
+              <Paper 
+                elevation={0}
+                sx={{ 
+                  background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
+                  borderRadius: 3,
+                  border: '1px solid rgba(44, 85, 48, 0.08)',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '3px',
+                    background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+                    borderRadius: '12px 12px 0 0',
+                  }
+                }}
+              >
+                <Box sx={{ p: 3 }}>
+                  <Typography 
+                    variant="h5" 
+                    sx={{
+                      fontWeight: 700,
+                      color: '#2c5530',
+                      mb: 0.5,
+                      fontSize: { xs: '1.3rem', md: '1.5rem' }
+                    }}
+                  >
+                    Project Submissions
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#666',
+                      fontSize: '0.9rem'
+                    }}
+                  >
+                    All client project submissions in chronological order
+                  </Typography>
+                </Box>
+
+                {loading ? (
+                  <Box sx={{ p: 6, textAlign: 'center' }}>
+                    <Typography sx={{ color: '#666' }}>Loading projects...</Typography>
+                  </Box>
+                ) : projects.length === 0 ? (
+                  <Box sx={{ p: 6, textAlign: 'center' }}>
+                    <Typography sx={{ color: '#666' }}>
+                      No projects submitted yet.
+                    </Typography>
+                  </Box>
+                ) : (
+                  <TableContainer>
+                    <Table>
+                      <TableHead>
+                        <TableRow 
+                          sx={{
+                            background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.05) 0%, rgba(212, 212, 170, 0.05) 100%)',
+                          }}
+                        >
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Name</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Company</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Email</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Submitted</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Actions</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {projects.map((project) => (
+                          <TableRow 
+                            key={project.id} 
+                            hover
                             sx={{
-                              background: 'linear-gradient(45deg, #8b4513 30%, #a0522d 90%)',
-                              color: 'white',
-                              px: 2,
-                              py: 0.75,
-                              borderRadius: 1.5,
-                              textTransform: 'none',
-                              fontWeight: 600,
-                              fontSize: '0.85rem',
-                              boxShadow: '0 4px 12px rgba(139, 69, 19, 0.2)',
                               '&:hover': {
-                                background: 'linear-gradient(45deg, #a0522d 30%, #8b4513 90%)',
-                                transform: 'translateY(-1px)',
-                                boxShadow: '0 6px 16px rgba(139, 69, 19, 0.3)',
+                                background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.02) 0%, rgba(212, 212, 170, 0.02) 100%)',
                               }
                             }}
                           >
-                            View Details
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                            <TableCell sx={{ color: '#333' }}>
+                              {project.First_Name} {project.Last_Name}
+                            </TableCell>
+                            <TableCell sx={{ color: '#333' }}>{project.Company_Name}</TableCell>
+                            <TableCell sx={{ color: '#666', fontSize: '0.9rem' }}>{project.Email_Address}</TableCell>
+                            <TableCell sx={{ color: '#666', fontSize: '0.9rem' }}>
+                              {formatDate(project.timestamp)}
+                            </TableCell>
+                            <TableCell>
+                              <Button
+                                size="small"
+                                onClick={() => handleViewProjectDetails(project)}
+                                startIcon={<VisibilityIcon />}
+                                sx={{
+                                  background: 'linear-gradient(45deg, #8b4513 30%, #a0522d 90%)',
+                                  color: 'white',
+                                  px: 2,
+                                  py: 0.75,
+                                  borderRadius: 1.5,
+                                  textTransform: 'none',
+                                  fontWeight: 600,
+                                  fontSize: '0.85rem',
+                                  boxShadow: '0 4px 12px rgba(139, 69, 19, 0.2)',
+                                  '&:hover': {
+                                    background: 'linear-gradient(45deg, #a0522d 30%, #8b4513 90%)',
+                                    transform: 'translateY(-1px)',
+                                    boxShadow: '0 6px 16px rgba(139, 69, 19, 0.3)',
+                                  }
+                                }}
+                              >
+                                View Details
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+              </Paper>
             )}
-          </Paper>
+
+            {/* Contact Messages Table */}
+            {tabValue === 1 && (
+              <Paper 
+                elevation={0}
+                sx={{ 
+                  background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
+                  borderRadius: 3,
+                  border: '1px solid rgba(44, 85, 48, 0.08)',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '3px',
+                    background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+                    borderRadius: '12px 12px 0 0',
+                  }
+                }}
+              >
+                <Box sx={{ p: 3 }}>
+                  <Typography 
+                    variant="h5" 
+                    sx={{
+                      fontWeight: 700,
+                      color: '#2c5530',
+                      mb: 0.5,
+                      fontSize: { xs: '1.3rem', md: '1.5rem' }
+                    }}
+                  >
+                    Contact Messages
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#666',
+                      fontSize: '0.9rem'
+                    }}
+                  >
+                    Customer inquiries and messages
+                  </Typography>
+                </Box>
+
+                {loading ? (
+                  <Box sx={{ p: 6, textAlign: 'center' }}>
+                    <Typography sx={{ color: '#666' }}>Loading messages...</Typography>
+                  </Box>
+                ) : contactMessages.length === 0 ? (
+                  <Box sx={{ p: 6, textAlign: 'center' }}>
+                    <EmailIcon sx={{ fontSize: 60, color: '#ccc', mb: 2 }} />
+                    <Typography sx={{ color: '#666' }}>
+                      No messages yet
+                    </Typography>
+                  </Box>
+                ) : (
+                  <TableContainer>
+                    <Table>
+                      <TableHead>
+                        <TableRow 
+                          sx={{
+                            background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.05) 0%, rgba(212, 212, 170, 0.05) 100%)',
+                          }}
+                        >
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Status</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Name</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Email</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Message Preview</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Date</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }} align="center">Actions</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {contactMessages.map((message) => (
+                          <TableRow
+                            key={message.id}
+                            sx={{
+                              '&:hover': { background: 'rgba(44, 85, 48, 0.02)' },
+                              transition: 'background 0.2s ease',
+                            }}
+                          >
+                            <TableCell>
+                              <Chip
+                                label={message.status === 'unread' ? 'Unread' : 'Read'}
+                                size="small"
+                                sx={{
+                                  background: message.status === 'unread'
+                                    ? 'linear-gradient(135deg, #f44336 0%, #e53935 100%)'
+                                    : 'linear-gradient(135deg, #4caf50 0%, #43a047 100%)',
+                                  color: 'white',
+                                  fontWeight: 600,
+                                }}
+                              />
+                            </TableCell>
+                            <TableCell sx={{ fontWeight: 500 }}>{message.name}</TableCell>
+                            <TableCell sx={{ fontSize: '0.9rem' }}>{message.email}</TableCell>
+                            <TableCell>
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  maxWidth: 250,
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                  whiteSpace: 'nowrap',
+                                  color: '#666'
+                                }}
+                              >
+                                {message.message}
+                              </Typography>
+                            </TableCell>
+                            <TableCell sx={{ fontSize: '0.9rem' }}>
+                              {formatDate(message.timestamp || message.submittedAt)}
+                            </TableCell>
+                            <TableCell align="center">
+                              <IconButton
+                                size="small"
+                                onClick={() => handleViewMessage(message)}
+                                sx={{ color: '#2c5530', mr: 0.5 }}
+                              >
+                                <VisibilityIcon />
+                              </IconButton>
+                              {message.status === 'unread' && (
+                                <IconButton
+                                  size="small"
+                                  onClick={() => handleMarkAsRead(message.id)}
+                                  sx={{ color: '#4caf50', mr: 0.5 }}
+                                >
+                                  <MarkEmailReadIcon />
+                                </IconButton>
+                              )}
+                              <IconButton
+                                size="small"
+                                onClick={() => handleDeleteMessage(message.id)}
+                                sx={{ color: '#f44336' }}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+              </Paper>
+            )}
+          </Box>
         </Container>
       </Box>
 
       {/* Project Details Dialog */}
       <Dialog 
         open={detailsOpen} 
-        onClose={handleCloseDetails}
+        onClose={handleCloseProjectDetails}
         maxWidth="md"
         fullWidth
         PaperProps={{
@@ -677,7 +950,7 @@ const AdminDashboard = () => {
         </DialogContent>
         <DialogActions sx={{ p: 2.5, borderTop: '1px solid rgba(44, 85, 48, 0.1)' }}>
           <Button 
-            onClick={handleCloseDetails}
+            onClick={handleCloseProjectDetails}
             sx={{
               background: 'linear-gradient(45deg, #8b4513 30%, #a0522d 90%)',
               color: 'white',
@@ -697,6 +970,144 @@ const AdminDashboard = () => {
             Close
           </Button>
         </DialogActions>
+      </Dialog>
+
+      {/* Message Details Dialog */}
+      <Dialog
+        open={messageDetailsOpen}
+        onClose={handleCloseMessageDetails}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
+          }
+        }}
+      >
+        {selectedMessage && (
+          <>
+            <DialogTitle
+              sx={{
+                background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                color: 'white',
+                fontWeight: 700,
+              }}
+            >
+              Message Details
+            </DialogTitle>
+            <DialogContent sx={{ mt: 3 }}>
+              <Box sx={{ mb: 3 }}>
+                <Typography variant="caption" sx={{ color: '#666', display: 'block', mb: 0.5 }}>
+                  From
+                </Typography>
+                <Typography variant="h6" sx={{ fontWeight: 600, color: '#2c5530' }}>
+                  {selectedMessage.name}
+                </Typography>
+              </Box>
+
+              <Box sx={{ mb: 3 }}>
+                <Typography variant="caption" sx={{ color: '#666', display: 'block', mb: 0.5 }}>
+                  Email
+                </Typography>
+                <Typography variant="body1" sx={{ color: '#333' }}>
+                  {selectedMessage.email}
+                </Typography>
+              </Box>
+
+              <Box sx={{ mb: 3 }}>
+                <Typography variant="caption" sx={{ color: '#666', display: 'block', mb: 0.5 }}>
+                  Date Received
+                </Typography>
+                <Typography variant="body2" sx={{ color: '#666' }}>
+                  {formatDate(selectedMessage.timestamp || selectedMessage.submittedAt)}
+                </Typography>
+              </Box>
+
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="caption" sx={{ color: '#666', display: 'block', mb: 0.5 }}>
+                  Message
+                </Typography>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 2,
+                    background: 'rgba(44, 85, 48, 0.02)',
+                    border: '1px solid rgba(44, 85, 48, 0.1)',
+                    borderRadius: 2,
+                  }}
+                >
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      whiteSpace: 'pre-wrap',
+                      color: '#333',
+                      lineHeight: 1.6
+                    }}
+                  >
+                    {selectedMessage.message}
+                  </Typography>
+                </Paper>
+              </Box>
+
+              <Box>
+                <Chip
+                  label={selectedMessage.status === 'unread' ? 'Unread' : 'Read'}
+                  sx={{
+                    background: selectedMessage.status === 'unread'
+                      ? 'linear-gradient(135deg, #f44336 0%, #e53935 100%)'
+                      : 'linear-gradient(135deg, #4caf50 0%, #43a047 100%)',
+                    color: 'white',
+                    fontWeight: 600,
+                  }}
+                />
+              </Box>
+            </DialogContent>
+            <DialogActions sx={{ p: 2, gap: 1 }}>
+              {selectedMessage.status === 'unread' && (
+                <Button
+                  onClick={() => {
+                    handleMarkAsRead(selectedMessage.id);
+                    handleCloseMessageDetails();
+                  }}
+                  startIcon={<MarkEmailReadIcon />}
+                  sx={{
+                    background: 'linear-gradient(135deg, #4caf50 0%, #43a047 100%)',
+                    color: 'white',
+                    '&:hover': {
+                      background: 'linear-gradient(135deg, #43a047 0%, #388e3c 100%)',
+                    }
+                  }}
+                >
+                  Mark as Read
+                </Button>
+              )}
+              <Button
+                onClick={() => {
+                  handleDeleteMessage(selectedMessage.id);
+                }}
+                startIcon={<DeleteIcon />}
+                color="error"
+              >
+                Delete
+              </Button>
+              <Button
+                onClick={handleCloseMessageDetails}
+                variant="outlined"
+                sx={{
+                  borderColor: '#2c5530',
+                  color: '#2c5530',
+                  '&:hover': {
+                    borderColor: '#2c5530',
+                    background: 'rgba(44, 85, 48, 0.05)',
+                  }
+                }}
+              >
+                Close
+              </Button>
+            </DialogActions>
+          </>
+        )}
       </Dialog>
     </Box>
   );

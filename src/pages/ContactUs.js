@@ -10,7 +10,7 @@ import {
   Grid
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import emailjs from '@emailjs/browser';
+import { firebaseService } from '../services/FirebaseService';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import SendIcon from '@mui/icons-material/Send';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -99,20 +99,19 @@ const ContactUs = () => {
     setError('');
 
     try {
-      // For now, we'll simulate email sending
-      // You'll need to configure EmailJS or implement a backend email service
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-      
-      console.log('Email data:', {
+      await firebaseService.saveContactFormAsync({
         name: formData.name,
         email: formData.email,
-        message: `${formData.name} asked about:\n${formData.description}`
+        message: formData.description,
+        timestamp: new Date().toISOString(),
+        submittedAt: Date.now(),
+        status: 'unread' // So admin can mark as read later
       });
 
       navigate('/email-sent');
     } catch (err) {
-      setError('Failed to send email. Please try again.');
-      console.error('Error sending email:', err);
+      setError('Failed to send message. Please try again.');
+      console.error('Error submitting contact form:', err);
     } finally {
       setLoading(false);
     }
