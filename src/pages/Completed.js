@@ -27,9 +27,9 @@ const Completed = () => {
           background: `
             linear-gradient(
               135deg,
-              rgba(44, 85, 48, 0.95) 0%,
-              rgba(74, 124, 89, 0.9) 50%,
-              rgba(107, 142, 107, 0.85) 100%
+              rgba(137, 207, 240, 0.95) 0%,
+              rgba(167, 216, 240, 0.9) 50%,
+              rgba(186, 225, 245, 0.85) 100%
             )
           `,
           color: 'white',
@@ -87,11 +87,8 @@ const Completed = () => {
                 fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
                 fontWeight: 800,
                 mb: 2,
-                background: 'linear-gradient(45deg, #ffffff 30%, #d4d4aa 90%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                color: '#ffffff',
+                textShadow: '0 2px 20px rgba(0,0,0,0.3), 0 4px 6px rgba(45,95,141,0.4)',
                 letterSpacing: '-0.02em',
               }}
             >
@@ -101,10 +98,11 @@ const Completed = () => {
             <Typography
               variant="h5"
               sx={{
-                color: 'rgba(255,255,255,0.9)',
-                fontWeight: 400,
+                color: '#ffffff',
+                fontWeight: 500,
                 fontSize: { xs: '1rem', md: '1.2rem' },
                 lineHeight: 1.5,
+                textShadow: '0 2px 10px rgba(0,0,0,0.25)',
               }}
             >
               Your project has been submitted successfully
@@ -128,7 +126,7 @@ const Completed = () => {
               textAlign: 'center',
               background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
               borderRadius: 3,
-              border: '1px solid rgba(44, 85, 48, 0.08)',
+              border: '1px solid rgba(137, 207, 240, 0.08)',
               position: 'relative',
               '&::before': {
                 content: '""',
@@ -137,7 +135,7 @@ const Completed = () => {
                 left: 0,
                 right: 0,
                 height: '3px',
-                background: 'linear-gradient(90deg, #2c5530, #4a7c59, #8b4513)',
+                background: 'linear-gradient(90deg, #4A9FD5, #89CFF0, #8b4513)',
                 borderRadius: '12px 12px 0 0',
               }
             }}
@@ -152,18 +150,18 @@ const Completed = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.15) 0%, rgba(212, 212, 170, 0.15) 100%)',
+                background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.15) 0%, rgba(167, 216, 240, 0.15) 100%)',
                 animation: 'pulse 2s ease-in-out infinite',
               }}
             >
-              <CheckCircleIcon sx={{ fontSize: 56, color: '#2c5530' }} />
+              <CheckCircleIcon sx={{ fontSize: 56, color: '#4A9FD5' }} />
             </Box>
 
             <Typography 
               variant="h4" 
               sx={{
                 fontWeight: 700,
-                color: '#2c5530',
+                color: '#4A9FD5',
                 mb: 3,
                 fontSize: { xs: '1.5rem', md: '2rem' }
               }}
@@ -239,7 +237,7 @@ const Completed = () => {
                 startIcon={<HomeIcon />}
                 sx={{
                   minWidth: 180,
-                  background: 'linear-gradient(45deg, #2c5530 30%, #4a7c59 90%)',
+                  background: 'linear-gradient(45deg, #4A9FD5 30%, #89CFF0 90%)',
                   color: 'white',
                   px: 3,
                   py: 1.5,
@@ -247,11 +245,11 @@ const Completed = () => {
                   textTransform: 'none',
                   fontWeight: 600,
                   fontSize: '1rem',
-                  boxShadow: '0 6px 24px rgba(44, 85, 48, 0.3)',
+                  boxShadow: '0 6px 24px rgba(74, 159, 213, 0.3)',
                   '&:hover': {
-                    background: 'linear-gradient(45deg, #4a7c59 30%, #2c5530 90%)',
+                    background: 'linear-gradient(45deg, #89CFF0 30%, #4A9FD5 90%)',
                     transform: 'translateY(-2px)',
-                    boxShadow: '0 8px 28px rgba(44, 85, 48, 0.4)',
+                    boxShadow: '0 8px 28px rgba(74, 159, 213, 0.4)',
                   }
                 }}
               >

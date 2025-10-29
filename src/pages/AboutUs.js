@@ -58,9 +58,9 @@ const AboutUs = () => {
           background: `
             linear-gradient(
               135deg,
-              rgba(44, 85, 48, 0.95) 0%,
-              rgba(74, 124, 89, 0.9) 50%,
-              rgba(107, 142, 107, 0.85) 100%
+              rgba(137, 207, 240, 0.95) 0%,
+              rgba(167, 216, 240, 0.9) 50%,
+              rgba(186, 225, 245, 0.85) 100%
             )
           `,
           color: 'white',
@@ -101,11 +101,8 @@ const AboutUs = () => {
                 fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' },
                 fontWeight: 800,
                 mb: 2,
-                background: 'linear-gradient(45deg, #ffffff 30%, #d4d4aa 90%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                color: '#ffffff',
+                textShadow: '0 2px 20px rgba(0,0,0,0.3), 0 4px 6px rgba(45,95,141,0.4)',
                 letterSpacing: '-0.02em',
               }}
             >
@@ -117,12 +114,13 @@ const AboutUs = () => {
               component="h2"
               sx={{
                 fontSize: { xs: '1.1rem', sm: '1.3rem', md: '1.5rem' },
-                fontWeight: 300,
-                color: '#d4d4aa',
+                fontWeight: 500,
+                color: '#ffffff',
                 mb: 2,
                 maxWidth: '700px',
                 mx: 'auto',
                 lineHeight: 1.4,
+                textShadow: '0 2px 10px rgba(0,0,0,0.25)',
               }}
             >
               Revolutionizing Land Surveying Through Innovation
@@ -171,10 +169,10 @@ const AboutUs = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderRadius: '50%',
-                    background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.15) 0%, rgba(212, 212, 170, 0.15) 100%)',
+                    background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.15) 0%, rgba(167, 216, 240, 0.15) 100%)',
                   }}
                 >
-                  <BusinessIcon sx={{ fontSize: 32, color: '#2c5530' }} />
+                  <BusinessIcon sx={{ fontSize: 32, color: '#4A9FD5' }} />
                 </Box>
 
                 <Typography
@@ -183,7 +181,7 @@ const AboutUs = () => {
                   sx={{
                     fontSize: { xs: '1.8rem', md: '2.2rem' },
                     fontWeight: 700,
-                    color: '#2c5530',
+                    color: '#4A9FD5',
                     mb: 2,
                     letterSpacing: '-0.01em'
                   }}
@@ -214,7 +212,7 @@ const AboutUs = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderRadius: '50%',
-                    background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(44, 85, 48, 0.15) 100%)',
+                    background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(137, 207, 240, 0.15) 100%)',
                   }}
                 >
                   <RocketLaunchIcon sx={{ fontSize: 32, color: '#8b4513' }} />
@@ -226,7 +224,7 @@ const AboutUs = () => {
                   sx={{
                     fontSize: { xs: '1.8rem', md: '2.2rem' },
                     fontWeight: 700,
-                    color: '#2c5530',
+                    color: '#4A9FD5',
                     mb: 2,
                     letterSpacing: '-0.01em'
                   }}
@@ -252,7 +250,7 @@ const AboutUs = () => {
                     p: 2.5,
                     background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                     borderRadius: 3,
-                    border: '1px solid rgba(44, 85, 48, 0.08)',
+                    border: '1px solid rgba(137, 207, 240, 0.08)',
                     position: 'relative',
                     '&::before': {
                       content: '""',
@@ -261,7 +259,7 @@ const AboutUs = () => {
                       left: 0,
                       right: 0,
                       height: '3px',
-                      background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+                      background: 'linear-gradient(90deg, #8b4513, #a0522d, #4A9FD5)',
                       borderRadius: '12px 12px 0 0',
                     }
                   }}
@@ -306,7 +304,7 @@ const AboutUs = () => {
                 sx={{
                   fontSize: { xs: '1.8rem', md: '2.2rem' },
                   fontWeight: 700,
-                  color: '#2c5530',
+                  color: '#4A9FD5',
                   mb: 2,
                   letterSpacing: '-0.01em'
                 }}
@@ -336,7 +334,7 @@ const AboutUs = () => {
                       height: '100%',
                       background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                       borderRadius: 3,
-                      border: '1px solid rgba(44, 85, 48, 0.08)',
+                      border: '1px solid rgba(137, 207, 240, 0.08)',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       position: 'relative',
                       '&::before': {
@@ -346,7 +344,7 @@ const AboutUs = () => {
                         left: 0,
                         right: 0,
                         height: '3px',
-                        background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+                        background: 'linear-gradient(90deg, #8b4513, #a0522d, #4A9FD5)',
                         borderRadius: '12px 12px 0 0',
                         transform: 'scaleX(0)',
                         transformOrigin: 'left',
@@ -354,7 +352,7 @@ const AboutUs = () => {
                       },
                       '&:hover': {
                         transform: 'translateY(-5px)',
-                        boxShadow: '0 15px 35px rgba(44, 85, 48, 0.12)',
+                        boxShadow: '0 15px 35px rgba(137, 207, 240, 0.12)',
                         '&::before': {
                           transform: 'scaleX(1)',
                         },
@@ -372,8 +370,8 @@ const AboutUs = () => {
                           alignItems: 'center',
                           justifyContent: 'center',
                           borderRadius: '50%',
-                          background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.1) 0%, rgba(212, 212, 170, 0.1) 100%)',
-                          color: '#2c5530',
+                          background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.1) 0%, rgba(167, 216, 240, 0.1) 100%)',
+                          color: '#4A9FD5',
                         }}
                       >
                         {value.icon}
@@ -384,7 +382,7 @@ const AboutUs = () => {
                         gutterBottom
                         sx={{
                           fontWeight: 600,
-                          color: '#2c5530',
+                          color: '#4A9FD5',
                           mb: 1.5,
                           fontSize: { xs: '1.1rem', md: '1.2rem' }
                         }}
@@ -415,7 +413,7 @@ const AboutUs = () => {
       <Box
         sx={{
           py: { xs: 5, md: 6 },
-          background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+          background: 'linear-gradient(135deg, #4A9FD5 0%, #89CFF0 100%)',
           position: 'relative',
           '&::before': {
             content: '""',

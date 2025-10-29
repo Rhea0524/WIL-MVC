@@ -171,14 +171,14 @@ const AdminDashboard = () => {
             textAlign: 'center',
             background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
             borderRadius: 3,
-            border: '1px solid rgba(44, 85, 48, 0.08)',
+            border: '1px solid rgba(137, 207, 240, 0.08)',
           }}
         >
           <Typography 
             variant="h5" 
             gutterBottom
             sx={{ 
-              color: '#2c5530',
+              color: '#4A9FD5',
               fontWeight: 700,
               mb: 2
             }}
@@ -225,15 +225,15 @@ const AdminDashboard = () => {
       icon: <FolderIcon sx={{ fontSize: 32 }} />,
       title: "Total Projects",
       value: projects.length,
-      gradient: 'linear-gradient(135deg, rgba(44, 85, 48, 0.15) 0%, rgba(212, 212, 170, 0.15) 100%)',
-      color: '#2c5530'
+      gradient: 'linear-gradient(135deg, rgba(137, 207, 240, 0.15) 0%, rgba(167, 216, 240, 0.15) 100%)',
+      color: '#4A9FD5'
     },
     {
       icon: <EmailIcon sx={{ fontSize: 32 }} />,
       title: "Contact Messages",
       value: contactMessages.length,
       badge: getUnreadCount() > 0 ? getUnreadCount() : null,
-      gradient: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(44, 85, 48, 0.15) 100%)',
+      gradient: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(137, 207, 240, 0.15) 100%)',
       color: '#8b4513'
     },
     {
@@ -244,8 +244,8 @@ const AdminDashboard = () => {
         weekAgo.setDate(weekAgo.getDate() - 7);
         return new Date(p.timestamp) > weekAgo;
       }).length,
-      gradient: 'linear-gradient(135deg, rgba(74, 124, 89, 0.15) 0%, rgba(107, 142, 107, 0.15) 100%)',
-      color: '#4a7c59'
+      gradient: 'linear-gradient(135deg, rgba(74, 159, 213, 0.15) 0%, rgba(137, 207, 240, 0.15) 100%)',
+      color: '#5AAFDE'
     }
   ];
 
@@ -261,9 +261,9 @@ const AdminDashboard = () => {
           background: `
             linear-gradient(
               135deg,
-              rgba(44, 85, 48, 0.95) 0%,
-              rgba(74, 124, 89, 0.9) 50%,
-              rgba(107, 142, 107, 0.85) 100%
+              rgba(137, 207, 240, 0.95) 0%,
+              rgba(167, 216, 240, 0.9) 50%,
+              rgba(186, 225, 245, 0.85) 100%
             )
           `,
           color: 'white',
@@ -319,11 +319,8 @@ const AdminDashboard = () => {
                 fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' },
                 fontWeight: 800,
                 mb: 2,
-                background: 'linear-gradient(45deg, #ffffff 30%, #d4d4aa 90%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                color: '#ffffff',
+                textShadow: '0 2px 20px rgba(0,0,0,0.3), 0 4px 6px rgba(45,95,141,0.4)',
                 letterSpacing: '-0.02em',
               }}
             >
@@ -333,10 +330,11 @@ const AdminDashboard = () => {
             <Typography
               variant="h5"
               sx={{
-                color: 'rgba(255,255,255,0.9)',
-                fontWeight: 400,
+                color: '#ffffff',
+                fontWeight: 500,
                 fontSize: { xs: '1rem', md: '1.2rem' },
                 lineHeight: 1.5,
+                textShadow: '0 2px 10px rgba(0,0,0,0.25)',
               }}
             >
               Manage projects and customer communications
@@ -370,7 +368,7 @@ const AdminDashboard = () => {
                     height: '100%',
                     background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                     borderRadius: 3,
-                    border: '1px solid rgba(44, 85, 48, 0.08)',
+                    border: '1px solid rgba(137, 207, 240, 0.08)',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     position: 'relative',
                     overflow: 'hidden',
@@ -381,7 +379,7 @@ const AdminDashboard = () => {
                       left: 0,
                       right: 0,
                       height: '3px',
-                      background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+                      background: 'linear-gradient(90deg, #8b4513, #a0522d, #4A9FD5)',
                       borderRadius: '12px 12px 0 0',
                       transform: 'scaleX(0)',
                       transformOrigin: 'left',
@@ -389,7 +387,7 @@ const AdminDashboard = () => {
                     },
                     '&:hover': {
                       transform: 'translateY(-5px)',
-                      boxShadow: '0 15px 35px rgba(44, 85, 48, 0.12)',
+                      boxShadow: '0 15px 35px rgba(137, 207, 240, 0.12)',
                       '&::before': {
                         transform: 'scaleX(1)',
                       },
@@ -492,10 +490,10 @@ const AdminDashboard = () => {
                   minHeight: 48,
                 },
                 '& .Mui-selected': {
-                  color: '#2c5530',
+                  color: '#4A9FD5',
                 },
                 '& .MuiTabs-indicator': {
-                  backgroundColor: '#2c5530',
+                  backgroundColor: '#4A9FD5',
                   height: 3,
                 }
               }}
@@ -530,7 +528,7 @@ const AdminDashboard = () => {
                 sx={{ 
                   background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                   borderRadius: 3,
-                  border: '1px solid rgba(44, 85, 48, 0.08)',
+                  border: '1px solid rgba(137, 207, 240, 0.08)',
                   overflow: 'hidden',
                   position: 'relative',
                   '&::before': {
@@ -540,7 +538,7 @@ const AdminDashboard = () => {
                     left: 0,
                     right: 0,
                     height: '3px',
-                    background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+                    background: 'linear-gradient(90deg, #8b4513, #a0522d, #4A9FD5)',
                     borderRadius: '12px 12px 0 0',
                   }
                 }}
@@ -550,7 +548,7 @@ const AdminDashboard = () => {
                     variant="h5" 
                     sx={{
                       fontWeight: 700,
-                      color: '#2c5530',
+                      color: '#4A9FD5',
                       mb: 0.5,
                       fontSize: { xs: '1.3rem', md: '1.5rem' }
                     }}
@@ -584,14 +582,14 @@ const AdminDashboard = () => {
                       <TableHead>
                         <TableRow 
                           sx={{
-                            background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.05) 0%, rgba(212, 212, 170, 0.05) 100%)',
+                            background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.05) 0%, rgba(167, 216, 240, 0.05) 100%)',
                           }}
                         >
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Name</TableCell>
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Company</TableCell>
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Email</TableCell>
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Submitted</TableCell>
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Actions</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }}>Name</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }}>Company</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }}>Email</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }}>Submitted</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }}>Actions</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -601,7 +599,7 @@ const AdminDashboard = () => {
                             hover
                             sx={{
                               '&:hover': {
-                                background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.02) 0%, rgba(212, 212, 170, 0.02) 100%)',
+                                background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.02) 0%, rgba(167, 216, 240, 0.02) 100%)',
                               }
                             }}
                           >
@@ -654,7 +652,7 @@ const AdminDashboard = () => {
                 sx={{ 
                   background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                   borderRadius: 3,
-                  border: '1px solid rgba(44, 85, 48, 0.08)',
+                  border: '1px solid rgba(137, 207, 240, 0.08)',
                   overflow: 'hidden',
                   position: 'relative',
                   '&::before': {
@@ -664,7 +662,7 @@ const AdminDashboard = () => {
                     left: 0,
                     right: 0,
                     height: '3px',
-                    background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+                    background: 'linear-gradient(90deg, #8b4513, #a0522d, #4A9FD5)',
                     borderRadius: '12px 12px 0 0',
                   }
                 }}
@@ -674,7 +672,7 @@ const AdminDashboard = () => {
                     variant="h5" 
                     sx={{
                       fontWeight: 700,
-                      color: '#2c5530',
+                      color: '#4A9FD5',
                       mb: 0.5,
                       fontSize: { xs: '1.3rem', md: '1.5rem' }
                     }}
@@ -709,15 +707,15 @@ const AdminDashboard = () => {
                       <TableHead>
                         <TableRow 
                           sx={{
-                            background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.05) 0%, rgba(212, 212, 170, 0.05) 100%)',
+                            background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.05) 0%, rgba(167, 216, 240, 0.05) 100%)',
                           }}
                         >
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Status</TableCell>
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Name</TableCell>
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Email</TableCell>
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Message Preview</TableCell>
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }}>Date</TableCell>
-                          <TableCell sx={{ fontWeight: 600, color: '#2c5530' }} align="center">Actions</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }}>Status</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }}>Name</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }}>Email</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }}>Message Preview</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }}>Date</TableCell>
+                          <TableCell sx={{ fontWeight: 600, color: '#4A9FD5' }} align="center">Actions</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -725,7 +723,7 @@ const AdminDashboard = () => {
                           <TableRow
                             key={message.id}
                             sx={{
-                              '&:hover': { background: 'rgba(44, 85, 48, 0.02)' },
+                              '&:hover': { background: 'rgba(137, 207, 240, 0.02)' },
                               transition: 'background 0.2s ease',
                             }}
                           >
@@ -765,7 +763,7 @@ const AdminDashboard = () => {
                               <IconButton
                                 size="small"
                                 onClick={() => handleViewMessage(message)}
-                                sx={{ color: '#2c5530', mr: 0.5 }}
+                                sx={{ color: '#4A9FD5', mr: 0.5 }}
                               >
                                 <VisibilityIcon />
                               </IconButton>
@@ -813,10 +811,10 @@ const AdminDashboard = () => {
       >
         <DialogTitle
           sx={{
-            borderBottom: '1px solid rgba(44, 85, 48, 0.1)',
-            background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.05) 0%, rgba(212, 212, 170, 0.05) 100%)',
+            borderBottom: '1px solid rgba(137, 207, 240, 0.1)',
+            background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.05) 0%, rgba(167, 216, 240, 0.05) 100%)',
             fontWeight: 700,
-            color: '#2c5530',
+            color: '#4A9FD5',
             fontSize: '1.3rem'
           }}
         >
@@ -831,15 +829,15 @@ const AdminDashboard = () => {
                     elevation={0}
                     sx={{
                       p: 2.5,
-                      background: 'rgba(44, 85, 48, 0.03)',
+                      background: 'rgba(137, 207, 240, 0.03)',
                       borderRadius: 2,
-                      border: '1px solid rgba(44, 85, 48, 0.08)',
+                      border: '1px solid rgba(137, 207, 240, 0.08)',
                     }}
                   >
                     <Typography 
                       variant="subtitle2" 
                       sx={{ 
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                         fontWeight: 700,
                         mb: 2,
                         fontSize: '1rem'
@@ -948,7 +946,7 @@ const AdminDashboard = () => {
             </Box>
           )}
         </DialogContent>
-        <DialogActions sx={{ p: 2.5, borderTop: '1px solid rgba(44, 85, 48, 0.1)' }}>
+        <DialogActions sx={{ p: 2.5, borderTop: '1px solid rgba(137, 207, 240, 0.1)' }}>
           <Button 
             onClick={handleCloseProjectDetails}
             sx={{
@@ -989,7 +987,7 @@ const AdminDashboard = () => {
           <>
             <DialogTitle
               sx={{
-                background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                background: 'linear-gradient(135deg, #4A9FD5 0%, #89CFF0 100%)',
                 color: 'white',
                 fontWeight: 700,
               }}
@@ -1001,7 +999,7 @@ const AdminDashboard = () => {
                 <Typography variant="caption" sx={{ color: '#666', display: 'block', mb: 0.5 }}>
                   From
                 </Typography>
-                <Typography variant="h6" sx={{ fontWeight: 600, color: '#2c5530' }}>
+                <Typography variant="h6" sx={{ fontWeight: 600, color: '#4A9FD5' }}>
                   {selectedMessage.name}
                 </Typography>
               </Box>
@@ -1032,8 +1030,8 @@ const AdminDashboard = () => {
                   elevation={0}
                   sx={{
                     p: 2,
-                    background: 'rgba(44, 85, 48, 0.02)',
-                    border: '1px solid rgba(44, 85, 48, 0.1)',
+                    background: 'rgba(137, 207, 240, 0.02)',
+                    border: '1px solid rgba(137, 207, 240, 0.1)',
                     borderRadius: 2,
                   }}
                 >
@@ -1095,11 +1093,11 @@ const AdminDashboard = () => {
                 onClick={handleCloseMessageDetails}
                 variant="outlined"
                 sx={{
-                  borderColor: '#2c5530',
-                  color: '#2c5530',
+                  borderColor: '#4A9FD5',
+                  color: '#4A9FD5',
                   '&:hover': {
-                    borderColor: '#2c5530',
-                    background: 'rgba(44, 85, 48, 0.05)',
+                    borderColor: '#4A9FD5',
+                    background: 'rgba(137, 207, 240, 0.05)',
                   }
                 }}
               >

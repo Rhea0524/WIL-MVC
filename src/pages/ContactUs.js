@@ -105,7 +105,7 @@ const ContactUs = () => {
         message: formData.description,
         timestamp: new Date().toISOString(),
         submittedAt: Date.now(),
-        status: 'unread' // So admin can mark as read later
+        status: 'unread'
       });
 
       navigate('/email-sent');
@@ -147,9 +147,9 @@ const ContactUs = () => {
           background: `
             linear-gradient(
               135deg,
-              rgba(44, 85, 48, 0.95) 0%,
-              rgba(74, 124, 89, 0.9) 50%,
-              rgba(107, 142, 107, 0.85) 100%
+              rgba(137, 207, 240, 0.95) 0%,
+              rgba(167, 216, 240, 0.9) 50%,
+              rgba(186, 225, 245, 0.85) 100%
             )
           `,
           color: 'white',
@@ -207,11 +207,8 @@ const ContactUs = () => {
                 fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' },
                 fontWeight: 800,
                 mb: 2,
-                background: 'linear-gradient(45deg, #ffffff 30%, #d4d4aa 90%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                color: '#ffffff',
+                textShadow: '0 2px 20px rgba(0,0,0,0.3), 0 4px 6px rgba(45,95,141,0.4)',
                 letterSpacing: '-0.02em',
               }}
             >
@@ -223,12 +220,13 @@ const ContactUs = () => {
               component="h2"
               sx={{
                 fontSize: { xs: '1.1rem', sm: '1.3rem', md: '1.5rem' },
-                fontWeight: 300,
-                color: '#d4d4aa',
+                fontWeight: 500,
+                color: '#ffffff',
                 mb: 2,
                 maxWidth: '700px',
                 mx: 'auto',
                 lineHeight: 1.4,
+                textShadow: '0 2px 10px rgba(0,0,0,0.25)',
               }}
             >
               We'd Love to Hear From You
@@ -277,7 +275,7 @@ const ContactUs = () => {
                       height: '100%',
                       background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                       borderRadius: 3,
-                      border: '1px solid rgba(44, 85, 48, 0.08)',
+                      border: '1px solid rgba(137, 207, 240, 0.08)',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       position: 'relative',
                       '&::before': {
@@ -287,7 +285,7 @@ const ContactUs = () => {
                         left: 0,
                         right: 0,
                         height: '3px',
-                        background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+                        background: 'linear-gradient(90deg, #8b4513, #a0522d, #4A9FD5)',
                         borderRadius: '12px 12px 0 0',
                         transform: 'scaleX(0)',
                         transformOrigin: 'left',
@@ -295,7 +293,7 @@ const ContactUs = () => {
                       },
                       '&:hover': {
                         transform: 'translateY(-5px)',
-                        boxShadow: '0 15px 35px rgba(44, 85, 48, 0.12)',
+                        boxShadow: '0 15px 35px rgba(137, 207, 240, 0.12)',
                         '&::before': {
                           transform: 'scaleX(1)',
                         },
@@ -312,8 +310,8 @@ const ContactUs = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.1) 0%, rgba(212, 212, 170, 0.1) 100%)',
-                        color: '#2c5530',
+                        background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.1) 0%, rgba(167, 216, 240, 0.1) 100%)',
+                        color: '#4A9FD5',
                       }}
                     >
                       {info.icon}
@@ -324,7 +322,7 @@ const ContactUs = () => {
                       gutterBottom
                       sx={{
                         fontWeight: 600,
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                         mb: 1.5,
                         fontSize: { xs: '1.1rem', md: '1.2rem' }
                       }}
@@ -371,7 +369,7 @@ const ContactUs = () => {
                 p: { xs: 3, sm: 4 },
                 background: 'linear-gradient(145deg, rgba(255,255,255,0.98) 0%, rgba(248,248,240,0.98) 100%)',
                 borderRadius: 4,
-                border: '1px solid rgba(44, 85, 48, 0.08)',
+                border: '1px solid rgba(137, 207, 240, 0.08)',
                 position: 'relative',
                 '&::before': {
                   content: '""',
@@ -380,7 +378,7 @@ const ContactUs = () => {
                   left: 0,
                   right: 0,
                   height: '4px',
-                  background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+                  background: 'linear-gradient(90deg, #8b4513, #a0522d, #4A9FD5)',
                   borderRadius: '16px 16px 0 0',
                 }
               }}
@@ -392,7 +390,7 @@ const ContactUs = () => {
                   sx={{
                     fontSize: { xs: '1.8rem', md: '2.2rem' },
                     fontWeight: 700,
-                    color: '#2c5530',
+                    color: '#4A9FD5',
                     mb: 2,
                     letterSpacing: '-0.01em'
                   }}
@@ -446,21 +444,21 @@ const ContactUs = () => {
                       borderRadius: 3,
                       background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                       '& fieldset': {
-                        borderColor: 'rgba(44, 85, 48, 0.15)',
+                        borderColor: 'rgba(137, 207, 240, 0.15)',
                         transition: 'all 0.3s ease',
                       },
                       '&:hover fieldset': {
-                        borderColor: 'rgba(44, 85, 48, 0.3)',
+                        borderColor: 'rgba(137, 207, 240, 0.3)',
                       },
                       '&.Mui-focused fieldset': {
-                        borderColor: '#2c5530',
+                        borderColor: '#4A9FD5',
                         borderWidth: 2,
                       },
                     },
                     '& .MuiInputLabel-root': {
                       color: '#666',
                       '&.Mui-focused': {
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                       },
                     },
                     '& .MuiFormHelperText-root.Mui-error': {
@@ -486,21 +484,21 @@ const ContactUs = () => {
                       borderRadius: 3,
                       background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                       '& fieldset': {
-                        borderColor: 'rgba(44, 85, 48, 0.15)',
+                        borderColor: 'rgba(137, 207, 240, 0.15)',
                         transition: 'all 0.3s ease',
                       },
                       '&:hover fieldset': {
-                        borderColor: 'rgba(44, 85, 48, 0.3)',
+                        borderColor: 'rgba(137, 207, 240, 0.3)',
                       },
                       '&.Mui-focused fieldset': {
-                        borderColor: '#2c5530',
+                        borderColor: '#4A9FD5',
                         borderWidth: 2,
                       },
                     },
                     '& .MuiInputLabel-root': {
                       color: '#666',
                       '&.Mui-focused': {
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                       },
                     },
                     '& .MuiFormHelperText-root.Mui-error': {
@@ -527,21 +525,21 @@ const ContactUs = () => {
                       borderRadius: 3,
                       background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                       '& fieldset': {
-                        borderColor: 'rgba(44, 85, 48, 0.15)',
+                        borderColor: 'rgba(137, 207, 240, 0.15)',
                         transition: 'all 0.3s ease',
                       },
                       '&:hover fieldset': {
-                        borderColor: 'rgba(44, 85, 48, 0.3)',
+                        borderColor: 'rgba(137, 207, 240, 0.3)',
                       },
                       '&.Mui-focused fieldset': {
-                        borderColor: '#2c5530',
+                        borderColor: '#4A9FD5',
                         borderWidth: 2,
                       },
                     },
                     '& .MuiInputLabel-root': {
                       color: '#666',
                       '&.Mui-focused': {
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                       },
                     },
                     '& .MuiFormHelperText-root.Mui-error': {
@@ -565,19 +563,19 @@ const ContactUs = () => {
                       fontSize: '1rem',
                       fontWeight: 600,
                       minWidth: 200,
-                      background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
-                      boxShadow: '0 6px 24px rgba(44, 85, 48, 0.4)',
+                      background: 'linear-gradient(135deg, #4A9FD5 0%, #89CFF0 100%)',
+                      boxShadow: '0 6px 24px rgba(74, 159, 213, 0.4)',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       '&:hover': {
                         transform: 'translateY(-2px)',
-                        boxShadow: '0 10px 32px rgba(44, 85, 48, 0.5)',
-                        background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                        boxShadow: '0 10px 32px rgba(74, 159, 213, 0.5)',
+                        background: 'linear-gradient(135deg, #4A9FD5 0%, #89CFF0 100%)',
                       },
                       '&:disabled': {
-                        background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.4) 0%, rgba(74, 124, 89, 0.4) 100%)',
+                        background: 'linear-gradient(135deg, rgba(74, 159, 213, 0.4) 0%, rgba(137, 207, 240, 0.4) 100%)',
                         color: 'rgba(255,255,255,0.7)',
                         transform: 'none',
-                        boxShadow: '0 3px 12px rgba(44, 85, 48, 0.2)',
+                        boxShadow: '0 3px 12px rgba(74, 159, 213, 0.2)',
                       }
                     }}
                   >

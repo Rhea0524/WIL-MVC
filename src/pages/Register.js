@@ -133,9 +133,9 @@ const Register = () => {
           background: `
             linear-gradient(
               135deg,
-              rgba(44, 85, 48, 0.95) 0%,
-              rgba(74, 124, 89, 0.9) 50%,
-              rgba(107, 142, 107, 0.85) 100%
+              rgba(137, 207, 240, 0.95) 0%,
+              rgba(167, 216, 240, 0.9) 50%,
+              rgba(186, 225, 245, 0.85) 100%
             )
           `,
           '&::before': {
@@ -178,7 +178,7 @@ const Register = () => {
             width: '100%',
             background: 'linear-gradient(145deg, rgba(255,255,255,0.98) 0%, rgba(248,248,240,0.98) 100%)',
             borderRadius: 4,
-            border: '1px solid rgba(44, 85, 48, 0.08)',
+            border: '1px solid rgba(137, 207, 240, 0.08)',
             position: 'relative',
             transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
             opacity: isVisible ? 1 : 0,
@@ -191,7 +191,7 @@ const Register = () => {
               left: 0,
               right: 0,
               height: '4px',
-              background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+              background: 'linear-gradient(90deg, #8b4513, #a0522d, #4A9FD5)',
               borderRadius: '16px 16px 0 0',
             }
           }}
@@ -220,7 +220,7 @@ const Register = () => {
               sx={{
                 fontSize: { xs: '1.8rem', md: '2.2rem' },
                 fontWeight: 700,
-                color: '#2c5530',
+                color: '#4A9FD5',
                 mb: 1,
                 letterSpacing: '-0.01em'
               }}
@@ -278,21 +278,21 @@ const Register = () => {
                   borderRadius: 3,
                   background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                   '& fieldset': {
-                    borderColor: 'rgba(44, 85, 48, 0.15)',
+                    borderColor: 'rgba(137, 207, 240, 0.15)',
                     transition: 'all 0.3s ease',
                   },
                   '&:hover fieldset': {
-                    borderColor: 'rgba(44, 85, 48, 0.3)',
+                    borderColor: 'rgba(137, 207, 240, 0.3)',
                   },
                   '&.Mui-focused fieldset': {
-                    borderColor: '#2c5530',
+                    borderColor: '#4A9FD5',
                     borderWidth: 2,
                   },
                 },
                 '& .MuiInputLabel-root': {
                   color: '#666',
                   '&.Mui-focused': {
-                    color: '#2c5530',
+                    color: '#4A9FD5',
                   },
                 },
                 '& .MuiFormHelperText-root.Mui-error': {
@@ -320,21 +320,21 @@ const Register = () => {
                   borderRadius: 3,
                   background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                   '& fieldset': {
-                    borderColor: 'rgba(44, 85, 48, 0.15)',
+                    borderColor: 'rgba(137, 207, 240, 0.15)',
                     transition: 'all 0.3s ease',
                   },
                   '&:hover fieldset': {
-                    borderColor: 'rgba(44, 85, 48, 0.3)',
+                    borderColor: 'rgba(137, 207, 240, 0.3)',
                   },
                   '&.Mui-focused fieldset': {
-                    borderColor: '#2c5530',
+                    borderColor: '#4A9FD5',
                     borderWidth: 2,
                   },
                 },
                 '& .MuiInputLabel-root': {
                   color: '#666',
                   '&.Mui-focused': {
-                    color: '#2c5530',
+                    color: '#4A9FD5',
                   },
                 },
                 '& .MuiFormHelperText-root.Mui-error': {
@@ -362,21 +362,21 @@ const Register = () => {
                   borderRadius: 3,
                   background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                   '& fieldset': {
-                    borderColor: 'rgba(44, 85, 48, 0.15)',
+                    borderColor: 'rgba(137, 207, 240, 0.15)',
                     transition: 'all 0.3s ease',
                   },
                   '&:hover fieldset': {
-                    borderColor: 'rgba(44, 85, 48, 0.3)',
+                    borderColor: 'rgba(137, 207, 240, 0.3)',
                   },
                   '&.Mui-focused fieldset': {
-                    borderColor: '#2c5530',
+                    borderColor: '#4A9FD5',
                     borderWidth: 2,
                   },
                 },
                 '& .MuiInputLabel-root': {
                   color: '#666',
                   '&.Mui-focused': {
-                    color: '#2c5530',
+                    color: '#4A9FD5',
                   },
                 },
                 '& .MuiFormHelperText-root.Mui-error': {
@@ -399,19 +399,19 @@ const Register = () => {
                 borderRadius: 3,
                 fontSize: '1rem',
                 fontWeight: 600,
-                background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
-                boxShadow: '0 6px 24px rgba(44, 85, 48, 0.4)',
+                background: 'linear-gradient(135deg, #4A9FD5 0%, #89CFF0 100%)',
+                boxShadow: '0 6px 24px rgba(74, 159, 213, 0.4)',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 '&:hover': {
                   transform: 'translateY(-2px)',
-                  boxShadow: '0 10px 32px rgba(44, 85, 48, 0.5)',
-                  background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+                  boxShadow: '0 10px 32px rgba(74, 159, 213, 0.5)',
+                  background: 'linear-gradient(135deg, #4A9FD5 0%, #89CFF0 100%)',
                 },
                 '&:disabled': {
-                  background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.4) 0%, rgba(74, 124, 89, 0.4) 100%)',
+                  background: 'linear-gradient(135deg, rgba(74, 159, 213, 0.4) 0%, rgba(137, 207, 240, 0.4) 100%)',
                   color: 'rgba(255,255,255,0.7)',
                   transform: 'none',
-                  boxShadow: '0 3px 12px rgba(44, 85, 48, 0.2)',
+                  boxShadow: '0 3px 12px rgba(74, 159, 213, 0.2)',
                 }
               }}
             >
@@ -424,7 +424,7 @@ const Register = () => {
                 p: 2.5,
                 background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                 borderRadius: 3,
-                border: '1px solid rgba(44, 85, 48, 0.08)',
+                border: '1px solid rgba(137, 207, 240, 0.08)',
                 textAlign: 'center',
                 position: 'relative',
                 '&::before': {
@@ -434,7 +434,7 @@ const Register = () => {
                   left: 0,
                   right: 0,
                   height: '2px',
-                  background: 'linear-gradient(90deg, rgba(139, 69, 19, 0.3), rgba(160, 82, 45, 0.3), rgba(44, 85, 48, 0.3))',
+                  background: 'linear-gradient(90deg, rgba(139, 69, 19, 0.3), rgba(160, 82, 45, 0.3), rgba(74, 159, 213, 0.3))',
                   borderRadius: '12px 12px 0 0',
                 }
               }}
@@ -458,7 +458,7 @@ const Register = () => {
                     textDecoration: 'none',
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      color: '#2c5530',
+                      color: '#4A9FD5',
                       textDecoration: 'underline',
                     }
                   }}

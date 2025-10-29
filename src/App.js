@@ -19,7 +19,7 @@ import AdminDashboard from './pages/AdminDashboard';
 
 // Theme
 const theme = createTheme({
-  palette: { primary: { main: '#4CAF50' } },
+  palette: { primary: { main: '#4A9FD5' } },
 });
 
 // Navigation
@@ -49,12 +49,12 @@ const Navigation = () => {
   return (
     <AppBar 
       position="static" 
-      elevation={0}
+      elevation={3}
       sx={{
-        background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 50%, #6b8e6b 100%)',
+        background: 'linear-gradient(135deg, #2D5F8D 0%, #3B7FB8 50%, #4A9FD5 100%)',
         backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
-        boxShadow: '0 4px 32px rgba(44, 85, 48, 0.15)',
+        borderBottom: '2px solid rgba(255,255,255,0.15)',
+        boxShadow: '0 6px 20px rgba(45, 95, 141, 0.3)',
         position: 'relative',
         '&::before': {
           content: '""',
@@ -64,8 +64,8 @@ const Navigation = () => {
           right: 0,
           bottom: 0,
           background: `
-            radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(212, 212, 170, 0.05) 0%, transparent 50%)
+            radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 50%)
           `,
           pointerEvents: 'none'
         }
@@ -79,11 +79,8 @@ const Navigation = () => {
             cursor: 'pointer',
             fontSize: { xs: '1.5rem', md: '1.8rem' },
             fontWeight: 700,
-            background: 'linear-gradient(45deg, #ffffff 30%, #d4d4aa 90%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+            color: '#ffffff',
+            textShadow: '0 2px 8px rgba(0,0,0,0.2)',
             letterSpacing: '0.02em',
             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             '&:hover': {
@@ -100,7 +97,7 @@ const Navigation = () => {
             color="inherit" 
             onClick={() => navigate('/')}
             sx={{
-              color: 'rgba(255,255,255,0.9)',
+              color: 'rgba(255,255,255,0.95)',
               fontWeight: 500,
               fontSize: { xs: '0.9rem', md: '1rem' },
               px: { xs: 2, md: 3 },
@@ -110,8 +107,8 @@ const Navigation = () => {
               transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               position: 'relative',
               '&:hover': {
-                backgroundColor: 'rgba(255,255,255,0.1)',
-                color: '#d4d4aa',
+                backgroundColor: 'rgba(255,255,255,0.15)',
+                color: '#ffffff',
                 transform: 'translateY(-1px)',
               },
               '&::before': {
@@ -121,7 +118,7 @@ const Navigation = () => {
                 left: '50%',
                 width: 0,
                 height: '2px',
-                background: 'linear-gradient(90deg, #8b4513, #d4d4aa)',
+                background: 'linear-gradient(90deg, #8b4513, #ffffff)',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 transform: 'translateX(-50%)',
               },
@@ -140,7 +137,7 @@ const Navigation = () => {
                 color="inherit" 
                 onClick={() => navigate('/admin')}
                 sx={{
-                  color: 'rgba(255,255,255,0.9)',
+                  color: 'rgba(255,255,255,0.95)',
                   fontWeight: 500,
                   fontSize: { xs: '0.9rem', md: '1rem' },
                   px: { xs: 2, md: 3 },
@@ -153,7 +150,7 @@ const Navigation = () => {
                   border: '1px solid rgba(139, 69, 19, 0.3)',
                   '&:hover': {
                     backgroundColor: 'rgba(139, 69, 19, 0.3)',
-                    color: '#d4d4aa',
+                    color: '#ffffff',
                     transform: 'translateY(-1px)',
                     boxShadow: '0 4px 16px rgba(139, 69, 19, 0.2)',
                   }
@@ -165,7 +162,7 @@ const Navigation = () => {
                 color="inherit" 
                 onClick={() => navigate('/about')}
                 sx={{
-                  color: 'rgba(255,255,255,0.9)',
+                  color: 'rgba(255,255,255,0.95)',
                   fontWeight: 500,
                   fontSize: { xs: '0.9rem', md: '1rem' },
                   px: { xs: 2, md: 3 },
@@ -175,8 +172,8 @@ const Navigation = () => {
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   position: 'relative',
                   '&:hover': {
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                    color: '#d4d4aa',
+                    backgroundColor: 'rgba(255,255,255,0.15)',
+                    color: '#ffffff',
                     transform: 'translateY(-1px)',
                   },
                   '&::before': {
@@ -186,7 +183,7 @@ const Navigation = () => {
                     left: '50%',
                     width: 0,
                     height: '2px',
-                    background: 'linear-gradient(90deg, #8b4513, #d4d4aa)',
+                    background: 'linear-gradient(90deg, #8b4513, #ffffff)',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     transform: 'translateX(-50%)',
                   },
@@ -201,7 +198,7 @@ const Navigation = () => {
                 color="inherit" 
                 onClick={() => navigate('/contact')}
                 sx={{
-                  color: 'rgba(255,255,255,0.9)',
+                  color: 'rgba(255,255,255,0.95)',
                   fontWeight: 500,
                   fontSize: { xs: '0.9rem', md: '1rem' },
                   px: { xs: 2, md: 3 },
@@ -211,8 +208,8 @@ const Navigation = () => {
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   position: 'relative',
                   '&:hover': {
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                    color: '#d4d4aa',
+                    backgroundColor: 'rgba(255,255,255,0.15)',
+                    color: '#ffffff',
                     transform: 'translateY(-1px)',
                   },
                   '&::before': {
@@ -222,7 +219,7 @@ const Navigation = () => {
                     left: '50%',
                     width: 0,
                     height: '2px',
-                    background: 'linear-gradient(90deg, #8b4513, #d4d4aa)',
+                    background: 'linear-gradient(90deg, #8b4513, #ffffff)',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     transform: 'translateX(-50%)',
                   },
@@ -263,7 +260,7 @@ const Navigation = () => {
                 color="inherit" 
                 onClick={() => navigate('/about')}
                 sx={{
-                  color: 'rgba(255,255,255,0.9)',
+                  color: 'rgba(255,255,255,0.95)',
                   fontWeight: 500,
                   fontSize: { xs: '0.9rem', md: '1rem' },
                   px: { xs: 2, md: 3 },
@@ -273,8 +270,8 @@ const Navigation = () => {
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   position: 'relative',
                   '&:hover': {
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                    color: '#d4d4aa',
+                    backgroundColor: 'rgba(255,255,255,0.15)',
+                    color: '#ffffff',
                     transform: 'translateY(-1px)',
                   },
                   '&::before': {
@@ -284,7 +281,7 @@ const Navigation = () => {
                     left: '50%',
                     width: 0,
                     height: '2px',
-                    background: 'linear-gradient(90deg, #8b4513, #d4d4aa)',
+                    background: 'linear-gradient(90deg, #8b4513, #ffffff)',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     transform: 'translateX(-50%)',
                   },
@@ -299,7 +296,7 @@ const Navigation = () => {
                 color="inherit" 
                 onClick={() => navigate('/contact')}
                 sx={{
-                  color: 'rgba(255,255,255,0.9)',
+                  color: 'rgba(255,255,255,0.95)',
                   fontWeight: 500,
                   fontSize: { xs: '0.9rem', md: '1rem' },
                   px: { xs: 2, md: 3 },
@@ -309,8 +306,8 @@ const Navigation = () => {
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   position: 'relative',
                   '&:hover': {
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                    color: '#d4d4aa',
+                    backgroundColor: 'rgba(255,255,255,0.15)',
+                    color: '#ffffff',
                     transform: 'translateY(-1px)',
                   },
                   '&::before': {
@@ -320,7 +317,7 @@ const Navigation = () => {
                     left: '50%',
                     width: 0,
                     height: '2px',
-                    background: 'linear-gradient(90deg, #8b4513, #d4d4aa)',
+                    background: 'linear-gradient(90deg, #8b4513, #ffffff)',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     transform: 'translateX(-50%)',
                   },
@@ -343,14 +340,14 @@ const Navigation = () => {
                   alignItems: 'center',
                   mr: 2,
                   ml: 2,
-                  color: '#d4d4aa',
+                  color: '#ffffff',
                   fontWeight: 500,
                   fontSize: '0.95rem',
                   px: 3,
                   py: 1,
                   borderRadius: 2,
-                  background: 'rgba(212, 212, 170, 0.1)',
-                  border: '1px solid rgba(212, 212, 170, 0.2)',
+                  background: 'rgba(255, 255, 255, 0.15)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
                   backdropFilter: 'blur(10px)',
                 }}
               >
@@ -360,19 +357,19 @@ const Navigation = () => {
                 color="inherit" 
                 onClick={handleLogout}
                 sx={{
-                  color: 'rgba(255,255,255,0.9)',
+                  color: 'rgba(255,255,255,0.95)',
                   fontWeight: 500,
                   fontSize: { xs: '0.9rem', md: '1rem' },
                   px: { xs: 2, md: 3 },
                   py: 1,
                   borderRadius: 2,
                   textTransform: 'none',
-                  border: '1px solid rgba(255,255,255,0.2)',
+                  border: '1px solid rgba(255,255,255,0.3)',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   '&:hover': {
-                    backgroundColor: 'rgba(255,255,255,0.1)',
+                    backgroundColor: 'rgba(255,255,255,0.15)',
                     color: '#ffffff',
-                    borderColor: 'rgba(255,255,255,0.4)',
+                    borderColor: 'rgba(255,255,255,0.5)',
                     transform: 'translateY(-1px)',
                   }
                 }}
@@ -386,19 +383,19 @@ const Navigation = () => {
                 color="inherit" 
                 onClick={() => navigate('/login')}
                 sx={{
-                  color: 'rgba(255,255,255,0.9)',
+                  color: 'rgba(255,255,255,0.95)',
                   fontWeight: 500,
                   fontSize: { xs: '0.9rem', md: '1rem' },
                   px: { xs: 2, md: 3 },
                   py: 1,
                   borderRadius: 2,
                   textTransform: 'none',
-                  border: '1px solid rgba(255,255,255,0.2)',
+                  border: '1px solid rgba(255,255,255,0.3)',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   '&:hover': {
-                    backgroundColor: 'rgba(255,255,255,0.1)',
+                    backgroundColor: 'rgba(255,255,255,0.15)',
                     color: '#ffffff',
-                    borderColor: 'rgba(255,255,255,0.4)',
+                    borderColor: 'rgba(255,255,255,0.5)',
                     transform: 'translateY(-1px)',
                   }
                 }}
@@ -409,21 +406,21 @@ const Navigation = () => {
                 color="inherit" 
                 onClick={() => navigate('/register')}
                 sx={{
-                  color: '#d4d4aa',
+                  color: '#ffffff',
                   fontWeight: 600,
                   fontSize: { xs: '0.9rem', md: '1rem' },
                   px: { xs: 2, md: 3 },
                   py: 1,
                   borderRadius: 2,
                   textTransform: 'none',
-                  border: '2px solid #d4d4aa',
+                  border: '2px solid #ffffff',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   '&:hover': {
-                    backgroundColor: 'rgba(212, 212, 170, 0.15)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
                     color: '#ffffff',
                     borderColor: '#ffffff',
                     transform: 'translateY(-1px)',
-                    boxShadow: '0 4px 16px rgba(212, 212, 170, 0.2)',
+                    boxShadow: '0 4px 16px rgba(255, 255, 255, 0.2)',
                   }
                 }}
               >

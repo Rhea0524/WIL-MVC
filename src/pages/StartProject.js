@@ -66,7 +66,7 @@ const StartProject = () => {
             textAlign: 'center',
             background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
             borderRadius: 3,
-            border: '1px solid rgba(44, 85, 48, 0.08)',
+            border: '1px solid rgba(137, 207, 240, 0.08)',
           }}
         >
           <Box
@@ -79,8 +79,8 @@ const StartProject = () => {
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.15) 0%, rgba(212, 212, 170, 0.15) 100%)',
-              color: '#2c5530',
+              background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.15) 0%, rgba(167, 216, 240, 0.15) 100%)',
+              color: '#4A9FD5',
             }}
           >
             <RocketLaunchIcon sx={{ fontSize: 32 }} />
@@ -90,7 +90,7 @@ const StartProject = () => {
             variant="h5" 
             gutterBottom
             sx={{ 
-              color: '#2c5530',
+              color: '#4A9FD5',
               fontWeight: 700,
               mb: 2
             }}
@@ -132,16 +132,16 @@ const StartProject = () => {
               variant="outlined"
               onClick={() => navigate('/register')}
               sx={{
-                borderColor: '#2c5530',
-                color: '#2c5530',
+                borderColor: '#4A9FD5',
+                color: '#4A9FD5',
                 px: 3,
                 py: 1.5,
                 borderRadius: 2,
                 textTransform: 'none',
                 fontWeight: 600,
                 '&:hover': {
-                  borderColor: '#2c5530',
-                  background: 'rgba(44, 85, 48, 0.05)',
+                  borderColor: '#4A9FD5',
+                  background: 'rgba(74, 159, 213, 0.05)',
                 }
               }}
             >
@@ -164,7 +164,7 @@ const StartProject = () => {
             textAlign: 'center',
             background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
             borderRadius: 3,
-            border: '1px solid rgba(44, 85, 48, 0.08)',
+            border: '1px solid rgba(137, 207, 240, 0.08)',
           }}
         >
           <Box
@@ -177,7 +177,7 @@ const StartProject = () => {
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(44, 85, 48, 0.15) 100%)',
+              background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(74, 159, 213, 0.15) 100%)',
               color: '#8b4513',
             }}
           >
@@ -188,7 +188,7 @@ const StartProject = () => {
             variant="h5" 
             gutterBottom
             sx={{ 
-              color: '#2c5530',
+              color: '#4A9FD5',
               fontWeight: 700,
               mb: 2
             }}
@@ -230,16 +230,16 @@ const StartProject = () => {
               variant="outlined"
               onClick={() => navigate('/')}
               sx={{
-                borderColor: '#2c5530',
-                color: '#2c5530',
+                borderColor: '#4A9FD5',
+                color: '#4A9FD5',
                 px: 3,
                 py: 1.5,
                 borderRadius: 2,
                 textTransform: 'none',
                 fontWeight: 600,
                 '&:hover': {
-                  borderColor: '#2c5530',
-                  background: 'rgba(44, 85, 48, 0.05)',
+                  borderColor: '#4A9FD5',
+                  background: 'rgba(74, 159, 213, 0.05)',
                 }
               }}
             >
@@ -331,9 +331,9 @@ const StartProject = () => {
           background: `
             linear-gradient(
               135deg,
-              rgba(44, 85, 48, 0.95) 0%,
-              rgba(74, 124, 89, 0.9) 50%,
-              rgba(107, 142, 107, 0.85) 100%
+              rgba(137, 207, 240, 0.95) 0%,
+              rgba(167, 216, 240, 0.9) 50%,
+              rgba(186, 225, 245, 0.85) 100%
             )
           `,
           color: 'white',
@@ -391,11 +391,8 @@ const StartProject = () => {
                 fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
                 fontWeight: 800,
                 mb: 2,
-                background: 'linear-gradient(45deg, #ffffff 30%, #d4d4aa 90%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                color: '#ffffff',
+                textShadow: '0 2px 20px rgba(0,0,0,0.3), 0 4px 6px rgba(45,95,141,0.4)',
                 letterSpacing: '-0.02em',
               }}
             >
@@ -431,14 +428,14 @@ const StartProject = () => {
             sx={{ 
               mb: 4,
               borderRadius: 2,
-              background: 'linear-gradient(145deg, #e8f5e9 0%, #c8e6c9 100%)',
-              border: '1px solid rgba(44, 85, 48, 0.2)',
+              background: 'linear-gradient(145deg, #e3f2fd 0%, #bbdefb 100%)',
+              border: '1px solid rgba(74, 159, 213, 0.2)',
               '& .MuiAlert-icon': {
-                color: '#2c5530'
+                color: '#4A9FD5'
               }
             }}
           >
-            <Typography sx={{ fontWeight: 600, color: '#2c5530' }}>
+            <Typography sx={{ fontWeight: 600, color: '#4A9FD5' }}>
               Welcome back, {user.email}! This project will be saved to your account.
             </Typography>
           </Alert>
@@ -465,7 +462,7 @@ const StartProject = () => {
                 mb: 4,
                 background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                 borderRadius: 3,
-                border: '1px solid rgba(44, 85, 48, 0.08)',
+                border: '1px solid rgba(137, 207, 240, 0.08)',
                 position: 'relative',
                 '&::before': {
                   content: '""',
@@ -474,7 +471,7 @@ const StartProject = () => {
                   left: 0,
                   right: 0,
                   height: '3px',
-                  background: 'linear-gradient(90deg, #2c5530, #4a7c59)',
+                  background: 'linear-gradient(90deg, #4A9FD5, #89CFF0)',
                   borderRadius: '12px 12px 0 0',
                 }
               }}
@@ -489,7 +486,7 @@ const StartProject = () => {
                       gap: 2,
                       mb: 2,
                       pb: 2,
-                      borderBottom: '2px solid rgba(44, 85, 48, 0.1)'
+                      borderBottom: '2px solid rgba(74, 159, 213, 0.1)'
                     }}
                   >
                     <Box
@@ -500,8 +497,8 @@ const StartProject = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.15) 0%, rgba(212, 212, 170, 0.15) 100%)',
-                        color: '#2c5530',
+                        background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.15) 0%, rgba(167, 216, 240, 0.15) 100%)',
+                        color: '#4A9FD5',
                       }}
                     >
                       <PersonIcon sx={{ fontSize: 24 }} />
@@ -510,7 +507,7 @@ const StartProject = () => {
                       variant="h5" 
                       sx={{
                         fontWeight: 700,
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                         fontSize: { xs: '1.3rem', md: '1.5rem' }
                       }}
                     >
@@ -533,14 +530,14 @@ const StartProject = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                         '&.Mui-focused fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                       },
                       '& .MuiInputLabel-root.Mui-focused': {
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                       },
                     }}
                   />
@@ -559,14 +556,14 @@ const StartProject = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                         '&.Mui-focused fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                       },
                       '& .MuiInputLabel-root.Mui-focused': {
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                       },
                     }}
                   />
@@ -586,7 +583,7 @@ const StartProject = () => {
                     helperText="Email address from your account"
                     sx={{
                       '& .MuiOutlinedInput-root': {
-                        background: 'rgba(44, 85, 48, 0.02)',
+                        background: 'rgba(137, 207, 240, 0.02)',
                       },
                     }}
                   />
@@ -605,14 +602,14 @@ const StartProject = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                         '&.Mui-focused fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                       },
                       '& .MuiInputLabel-root.Mui-focused': {
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                       },
                     }}
                   />
@@ -629,14 +626,14 @@ const StartProject = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                         '&.Mui-focused fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                       },
                       '& .MuiInputLabel-root.Mui-focused': {
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                       },
                     }}
                   />
@@ -658,14 +655,14 @@ const StartProject = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                         '&.Mui-focused fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                       },
                       '& .MuiInputLabel-root.Mui-focused': {
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                       },
                     }}
                   />
@@ -682,14 +679,14 @@ const StartProject = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                         '&.Mui-focused fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                       },
                       '& .MuiInputLabel-root.Mui-focused': {
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                       },
                     }}
                   />
@@ -705,14 +702,14 @@ const StartProject = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                         '&.Mui-focused fieldset': {
-                          borderColor: '#2c5530',
+                          borderColor: '#4A9FD5',
                         },
                       },
                       '& .MuiInputLabel-root.Mui-focused': {
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                       },
                     }}
                   />
@@ -762,7 +759,7 @@ const StartProject = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(44, 85, 48, 0.15) 100%)',
+                        background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(74, 159, 213, 0.15) 100%)',
                         color: '#8b4513',
                       }}
                     >

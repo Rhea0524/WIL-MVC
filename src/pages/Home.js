@@ -64,9 +64,9 @@ const Home = () => {
           background: `
             linear-gradient(
               135deg,
-              rgba(44, 85, 48, 0.95) 0%,
-              rgba(74, 124, 89, 0.9) 50%,
-              rgba(107, 142, 107, 0.85) 100%
+              rgba(137, 207, 240, 0.95) 0%,
+              rgba(167, 216, 240, 0.9) 50%,
+              rgba(186, 225, 245, 0.85) 100%
             )
           `,
           color: 'white',
@@ -134,11 +134,8 @@ const Home = () => {
                 fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5rem' },
                 fontWeight: 800,
                 mb: 3,
-                background: 'linear-gradient(45deg, #ffffff 30%, #d4d4aa 90%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                color: '#ffffff',
+                textShadow: '0 2px 20px rgba(0,0,0,0.3), 0 4px 6px rgba(45,95,141,0.4)',
                 letterSpacing: '-0.02em',
                 animation: isVisible ? 'slideInFromTop 1s ease-out 0.3s both' : 'none',
                 '@keyframes slideInFromTop': {
@@ -161,12 +158,13 @@ const Home = () => {
               component="h2"
               sx={{
                 fontSize: { xs: '1.25rem', sm: '1.5rem', md: '2rem' },
-                fontWeight: 300,
-                color: '#d4d4aa',
+                fontWeight: 500,
+                color: '#ffffff',
                 mb: 3,
                 maxWidth: '800px',
                 mx: 'auto',
                 lineHeight: 1.4,
+                textShadow: '0 2px 10px rgba(0,0,0,0.25)',
                 animation: isVisible ? 'slideInFromLeft 1s ease-out 0.6s both' : 'none',
                 '@keyframes slideInFromLeft': {
                   '0%': {
@@ -282,8 +280,8 @@ const Home = () => {
                   py: 2,
                   fontSize: { xs: '1rem', md: '1.1rem' },
                   fontWeight: 600,
-                  color: '#d4d4aa',
-                  borderColor: '#d4d4aa',
+                  color: '#ffffff',
+                  borderColor: '#ffffff',
                   borderWidth: 2,
                   borderRadius: 3,
                   textTransform: 'none',
@@ -297,11 +295,11 @@ const Home = () => {
                     left: '-100%',
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(90deg, transparent, rgba(212, 212, 170, 0.2), transparent)',
+                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
                     transition: 'left 0.5s',
                   },
                   '&:hover': {
-                    backgroundColor: 'rgba(212, 212, 170, 0.15)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
                     borderColor: '#ffffff',
                     color: '#ffffff',
                     transform: 'translateY(-2px)',
@@ -334,7 +332,7 @@ const Home = () => {
               sx={{
                 fontSize: { xs: '2rem', md: '3rem' },
                 fontWeight: 700,
-                color: '#2c5530',
+                color: '#4A9FD5',
                 mb: 3,
                 letterSpacing: '-0.01em',
                 opacity: 0,
@@ -380,7 +378,7 @@ const Home = () => {
                     height: '100%',
                     background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
                     borderRadius: 4,
-                    border: '1px solid rgba(44, 85, 48, 0.08)',
+                    border: '1px solid rgba(137, 207, 240, 0.08)',
                     transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                     position: 'relative',
                     overflow: 'visible',
@@ -393,7 +391,7 @@ const Home = () => {
                       left: 0,
                       right: 0,
                       height: '4px',
-                      background: 'linear-gradient(90deg, #8b4513, #a0522d, #2c5530)',
+                      background: 'linear-gradient(90deg, #8b4513, #a0522d, #4A9FD5)',
                       borderRadius: '16px 16px 0 0',
                       transform: 'scaleX(0)',
                       transformOrigin: 'left',
@@ -401,16 +399,16 @@ const Home = () => {
                     },
                     '&:hover': {
                       transform: 'translateY(-12px) scale(1.02)',
-                      boxShadow: '0 25px 50px rgba(44, 85, 48, 0.2)',
+                      boxShadow: '0 25px 50px rgba(137, 207, 240, 0.2)',
                       '&::before': {
                         transform: 'scaleX(1)',
                       },
                       '& .service-icon': {
                         transform: 'scale(1.15) rotate(8deg)',
-                        background: 'linear-gradient(135deg, rgba(139, 69, 19, 0.15) 0%, rgba(212, 212, 170, 0.15) 100%)',
+                        background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.15) 0%, rgba(167, 216, 240, 0.15) 100%)',
                       },
                       '& .service-icon-inner': {
-                        color: '#8b4513'
+                        color: '#4A9FD5'
                       },
                       '& .feature-item': {
                         transform: 'translateX(5px)',
@@ -430,14 +428,14 @@ const Home = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg, rgba(44, 85, 48, 0.1) 0%, rgba(212, 212, 170, 0.1) 100%)',
+                        background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.1) 0%, rgba(167, 216, 240, 0.1) 100%)',
                         transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                       }}
                     >
                       <Box
                         className="service-icon-inner"
                         sx={{
-                          color: '#2c5530',
+                          color: '#4A9FD5',
                           transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                         }}
                       >
@@ -450,7 +448,7 @@ const Home = () => {
                       gutterBottom
                       sx={{
                         fontWeight: 600,
-                        color: '#2c5530',
+                        color: '#4A9FD5',
                         mb: 2,
                         fontSize: { xs: '1.25rem', md: '1.5rem' }
                       }}
@@ -516,7 +514,7 @@ const Home = () => {
       <Box
         sx={{
           py: { xs: 6, md: 10 },
-          background: 'linear-gradient(135deg, #2c5530 0%, #4a7c59 100%)',
+          background: 'linear-gradient(135deg, #4A9FD5 0%, #89CFF0 100%)',
           position: 'relative',
           '&::before': {
             content: '""',
@@ -642,14 +640,14 @@ const Home = () => {
                   py: 2,
                   fontSize: { xs: '1rem', md: '1.1rem' },
                   fontWeight: 600,
-                  color: '#d4d4aa',
-                  borderColor: '#d4d4aa',
+                  color: '#ffffff',
+                  borderColor: '#ffffff',
                   borderWidth: 2,
                   borderRadius: 3,
                   textTransform: 'none',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   '&:hover': {
-                    backgroundColor: 'rgba(212, 212, 170, 0.15)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
                     borderColor: '#ffffff',
                     color: '#ffffff',
                     transform: 'translateY(-2px)',
