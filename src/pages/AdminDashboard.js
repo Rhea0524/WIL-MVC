@@ -23,7 +23,9 @@ import {
   Tabs,
   Tab,
   Chip,
-  IconButton
+  IconButton,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -39,6 +41,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { user, isAdmin } = useAuth();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [projects, setProjects] = useState([]);
   const [contactMessages, setContactMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -249,13 +253,171 @@ const AdminDashboard = () => {
     }
   ];
 
+  // Mobile Card Component for Projects
+  const ProjectCard = ({ project }) => (
+    <Card
+      elevation={0}
+      sx={{
+        mb: 2,
+        background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
+        borderRadius: 2,
+        border: '1px solid rgba(137, 207, 240, 0.08)',
+        '&:hover': {
+          boxShadow: '0 4px 12px rgba(137, 207, 240, 0.15)',
+        }
+      }}
+    >
+      <CardContent>
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h6" sx={{ fontWeight: 600, color: '#4A9FD5', mb: 1 }}>
+            {project.First_Name} {project.Last_Name}
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#666', mb: 0.5 }}>
+            <strong>Company:</strong> {project.Company_Name}
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#666', mb: 0.5 }}>
+            <strong>Email:</strong> {project.Email_Address}
+          </Typography>
+          <Typography variant="caption" sx={{ color: '#999' }}>
+            {formatDate(project.timestamp)}
+          </Typography>
+        </Box>
+        <Button
+          fullWidth
+          size="small"
+          onClick={() => handleViewProjectDetails(project)}
+          startIcon={<VisibilityIcon />}
+          sx={{
+            background: 'linear-gradient(45deg, #8b4513 30%, #a0522d 90%)',
+            color: 'white',
+            py: 1,
+            borderRadius: 1.5,
+            textTransform: 'none',
+            fontWeight: 600,
+            '&:hover': {
+              background: 'linear-gradient(45deg, #a0522d 30%, #8b4513 90%)',
+            }
+          }}
+        >
+          View Details
+        </Button>
+      </CardContent>
+    </Card>
+  );
+
+  // Mobile Card Component for Messages
+  const MessageCard = ({ message }) => (
+    <Card
+      elevation={0}
+      sx={{
+        mb: 2,
+        background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
+        borderRadius: 2,
+        border: '1px solid rgba(137, 207, 240, 0.08)',
+        '&:hover': {
+          boxShadow: '0 4px 12px rgba(137, 207, 240, 0.15)',
+        }
+      }}
+    >
+      <CardContent>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h6" sx={{ fontWeight: 600, color: '#4A9FD5', mb: 0.5 }}>
+              {message.name}
+            </Typography>
+            <Typography variant="body2" sx={{ color: '#666', mb: 0.5 }}>
+              {message.email}
+            </Typography>
+            <Typography variant="caption" sx={{ color: '#999' }}>
+              {formatDate(message.timestamp || message.submittedAt)}
+            </Typography>
+          </Box>
+          <Chip
+            label={message.status === 'unread' ? 'Unread' : 'Read'}
+            size="small"
+            sx={{
+              background: message.status === 'unread'
+                ? 'linear-gradient(135deg, #f44336 0%, #e53935 100%)'
+                : 'linear-gradient(135deg, #4caf50 0%, #43a047 100%)',
+              color: 'white',
+              fontWeight: 600,
+            }}
+          />
+        </Box>
+        <Typography
+          variant="body2"
+          sx={{
+            color: '#666',
+            mb: 2,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+          }}
+        >
+          {message.message}
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <Button
+            fullWidth
+            size="small"
+            onClick={() => handleViewMessage(message)}
+            startIcon={<VisibilityIcon />}
+            sx={{
+              background: 'linear-gradient(45deg, #8b4513 30%, #a0522d 90%)',
+              color: 'white',
+              py: 1,
+              borderRadius: 1.5,
+              textTransform: 'none',
+              fontWeight: 600,
+              '&:hover': {
+                background: 'linear-gradient(45deg, #a0522d 30%, #8b4513 90%)',
+              }
+            }}
+          >
+            View
+          </Button>
+          {message.status === 'unread' && (
+            <IconButton
+              size="small"
+              onClick={() => handleMarkAsRead(message.id)}
+              sx={{ 
+                color: 'white',
+                background: 'linear-gradient(135deg, #4caf50 0%, #43a047 100%)',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #43a047 0%, #388e3c 100%)',
+                }
+              }}
+            >
+              <MarkEmailReadIcon />
+            </IconButton>
+          )}
+          <IconButton
+            size="small"
+            onClick={() => handleDeleteMessage(message.id)}
+            sx={{ 
+              color: 'white',
+              background: 'linear-gradient(135deg, #f44336 0%, #e53935 100%)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #e53935 0%, #d32f2f 100%)',
+              }
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <Box>
       {/* Hero Section */}
       <Box
         sx={{
           position: 'relative',
-          minHeight: '45vh',
+          minHeight: { xs: '35vh', md: '45vh' },
           display: 'flex',
           alignItems: 'center',
           background: `
@@ -298,9 +460,9 @@ const AdminDashboard = () => {
           >
             <Box
               sx={{
-                width: 64,
-                height: 64,
-                mb: 3,
+                width: { xs: 48, md: 64 },
+                height: { xs: 48, md: 64 },
+                mb: 2,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -309,16 +471,16 @@ const AdminDashboard = () => {
                 backdropFilter: 'blur(10px)',
               }}
             >
-              <DashboardIcon sx={{ fontSize: 32, color: '#d4d4aa' }} />
+              <DashboardIcon sx={{ fontSize: { xs: 24, md: 32 }, color: '#d4d4aa' }} />
             </Box>
 
             <Typography
               variant="h1"
               component="h1"
               sx={{
-                fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' },
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3.5rem' },
                 fontWeight: 800,
-                mb: 2,
+                mb: 1,
                 color: '#ffffff',
                 textShadow: '0 2px 20px rgba(0,0,0,0.3), 0 4px 6px rgba(45,95,141,0.4)',
                 letterSpacing: '-0.02em',
@@ -332,7 +494,7 @@ const AdminDashboard = () => {
               sx={{
                 color: '#ffffff',
                 fontWeight: 500,
-                fontSize: { xs: '1rem', md: '1.2rem' },
+                fontSize: { xs: '0.9rem', md: '1.2rem' },
                 lineHeight: 1.5,
                 textShadow: '0 2px 10px rgba(0,0,0,0.25)',
               }}
@@ -346,14 +508,14 @@ const AdminDashboard = () => {
       {/* Stats Section */}
       <Box
         sx={{
-          py: { xs: 4, md: 5 },
+          py: { xs: 3, md: 5 },
           background: 'linear-gradient(180deg, rgba(245,245,220,0.98) 0%, rgba(250,240,230,0.98) 100%)',
         }}
       >
         <Container maxWidth="lg">
           <Grid 
             container 
-            spacing={3}
+            spacing={2}
             sx={{
               opacity: statsVisible ? 1 : 0,
               transform: statsVisible ? 'translateY(0)' : 'translateY(30px)',
@@ -394,11 +556,11 @@ const AdminDashboard = () => {
                     }
                   }}
                 >
-                  <CardContent sx={{ p: 3 }}>
+                  <CardContent sx={{ p: { xs: 2, md: 3 } }}>
                     <Box
                       sx={{
-                        width: 56,
-                        height: 56,
+                        width: { xs: 48, md: 56 },
+                        height: { xs: 48, md: 56 },
                         mb: 2,
                         display: 'flex',
                         alignItems: 'center',
@@ -451,7 +613,7 @@ const AdminDashboard = () => {
                       sx={{
                         fontWeight: 700,
                         color: stat.color,
-                        fontSize: { xs: '2rem', md: '2.5rem' }
+                        fontSize: { xs: '1.8rem', md: '2.5rem' }
                       }}
                     >
                       {stat.value}
@@ -481,12 +643,13 @@ const AdminDashboard = () => {
             <Tabs
               value={tabValue}
               onChange={(e, newValue) => setTabValue(newValue)}
+              variant={isMobile ? "fullWidth" : "standard"}
               sx={{
                 mb: 3,
                 '& .MuiTab-root': {
                   fontWeight: 600,
                   textTransform: 'none',
-                  fontSize: '1rem',
+                  fontSize: { xs: '0.85rem', md: '1rem' },
                   minHeight: 48,
                 },
                 '& .Mui-selected': {
@@ -502,7 +665,7 @@ const AdminDashboard = () => {
               <Tab 
                 label={
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    Contact Messages ({contactMessages.length})
+                    Messages ({contactMessages.length})
                     {getUnreadCount() > 0 && (
                       <Chip
                         label={getUnreadCount()}
@@ -521,7 +684,7 @@ const AdminDashboard = () => {
               />
             </Tabs>
 
-            {/* Projects Table */}
+            {/* Projects - Mobile Cards or Desktop Table */}
             {tabValue === 0 && (
               <Paper 
                 elevation={0}
@@ -543,14 +706,14 @@ const AdminDashboard = () => {
                   }
                 }}
               >
-                <Box sx={{ p: 3 }}>
+                <Box sx={{ p: { xs: 2, md: 3 } }}>
                   <Typography 
                     variant="h5" 
                     sx={{
                       fontWeight: 700,
                       color: '#4A9FD5',
                       mb: 0.5,
-                      fontSize: { xs: '1.3rem', md: '1.5rem' }
+                      fontSize: { xs: '1.1rem', md: '1.5rem' }
                     }}
                   >
                     Project Submissions
@@ -567,14 +730,20 @@ const AdminDashboard = () => {
                 </Box>
 
                 {loading ? (
-                  <Box sx={{ p: 6, textAlign: 'center' }}>
+                  <Box sx={{ p: { xs: 4, md: 6 }, textAlign: 'center' }}>
                     <Typography sx={{ color: '#666' }}>Loading projects...</Typography>
                   </Box>
                 ) : projects.length === 0 ? (
-                  <Box sx={{ p: 6, textAlign: 'center' }}>
+                  <Box sx={{ p: { xs: 4, md: 6 }, textAlign: 'center' }}>
                     <Typography sx={{ color: '#666' }}>
                       No projects submitted yet.
                     </Typography>
+                  </Box>
+                ) : isMobile ? (
+                  <Box sx={{ p: 2 }}>
+                    {projects.map((project) => (
+                      <ProjectCard key={project.id} project={project} />
+                    ))}
                   </Box>
                 ) : (
                   <TableContainer>
@@ -645,7 +814,7 @@ const AdminDashboard = () => {
               </Paper>
             )}
 
-            {/* Contact Messages Table */}
+            {/* Contact Messages - Mobile Cards or Desktop Table */}
             {tabValue === 1 && (
               <Paper 
                 elevation={0}
@@ -667,14 +836,14 @@ const AdminDashboard = () => {
                   }
                 }}
               >
-                <Box sx={{ p: 3 }}>
+                <Box sx={{ p: { xs: 2, md: 3 } }}>
                   <Typography 
                     variant="h5" 
                     sx={{
                       fontWeight: 700,
                       color: '#4A9FD5',
                       mb: 0.5,
-                      fontSize: { xs: '1.3rem', md: '1.5rem' }
+                      fontSize: { xs: '1.1rem', md: '1.5rem' }
                     }}
                   >
                     Contact Messages
@@ -691,15 +860,21 @@ const AdminDashboard = () => {
                 </Box>
 
                 {loading ? (
-                  <Box sx={{ p: 6, textAlign: 'center' }}>
+                  <Box sx={{ p: { xs: 4, md: 6 }, textAlign: 'center' }}>
                     <Typography sx={{ color: '#666' }}>Loading messages...</Typography>
                   </Box>
                 ) : contactMessages.length === 0 ? (
-                  <Box sx={{ p: 6, textAlign: 'center' }}>
+                  <Box sx={{ p: { xs: 4, md: 6 }, textAlign: 'center' }}>
                     <EmailIcon sx={{ fontSize: 60, color: '#ccc', mb: 2 }} />
                     <Typography sx={{ color: '#666' }}>
                       No messages yet
                     </Typography>
+                  </Box>
+                ) : isMobile ? (
+                  <Box sx={{ p: 2 }}>
+                    {contactMessages.map((message) => (
+                      <MessageCard key={message.id} message={message} />
+                    ))}
                   </Box>
                 ) : (
                   <TableContainer>
@@ -802,9 +977,10 @@ const AdminDashboard = () => {
         onClose={handleCloseProjectDetails}
         maxWidth="md"
         fullWidth
+        fullScreen={isMobile}
         PaperProps={{
           sx: {
-            borderRadius: 3,
+            borderRadius: isMobile ? 0 : 3,
             background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
           }
         }}
@@ -815,7 +991,7 @@ const AdminDashboard = () => {
             background: 'linear-gradient(135deg, rgba(137, 207, 240, 0.05) 0%, rgba(167, 216, 240, 0.05) 100%)',
             fontWeight: 700,
             color: '#4A9FD5',
-            fontSize: '1.3rem'
+            fontSize: { xs: '1.1rem', md: '1.3rem' }
           }}
         >
           Project Details
@@ -949,6 +1125,7 @@ const AdminDashboard = () => {
         <DialogActions sx={{ p: 2.5, borderTop: '1px solid rgba(137, 207, 240, 0.1)' }}>
           <Button 
             onClick={handleCloseProjectDetails}
+            fullWidth={isMobile}
             sx={{
               background: 'linear-gradient(45deg, #8b4513 30%, #a0522d 90%)',
               color: 'white',
@@ -976,9 +1153,10 @@ const AdminDashboard = () => {
         onClose={handleCloseMessageDetails}
         maxWidth="md"
         fullWidth
+        fullScreen={isMobile}
         PaperProps={{
           sx: {
-            borderRadius: 3,
+            borderRadius: isMobile ? 0 : 3,
             background: 'linear-gradient(145deg, #ffffff 0%, #f8f8f0 100%)',
           }
         }}
@@ -990,6 +1168,7 @@ const AdminDashboard = () => {
                 background: 'linear-gradient(135deg, #4A9FD5 0%, #89CFF0 100%)',
                 color: 'white',
                 fontWeight: 700,
+                fontSize: { xs: '1.1rem', md: '1.25rem' }
               }}
             >
               Message Details
@@ -1008,7 +1187,7 @@ const AdminDashboard = () => {
                 <Typography variant="caption" sx={{ color: '#666', display: 'block', mb: 0.5 }}>
                   Email
                 </Typography>
-                <Typography variant="body1" sx={{ color: '#333' }}>
+                <Typography variant="body1" sx={{ color: '#333', wordBreak: 'break-word' }}>
                   {selectedMessage.email}
                 </Typography>
               </Box>
@@ -1040,7 +1219,8 @@ const AdminDashboard = () => {
                     sx={{
                       whiteSpace: 'pre-wrap',
                       color: '#333',
-                      lineHeight: 1.6
+                      lineHeight: 1.6,
+                      wordBreak: 'break-word'
                     }}
                   >
                     {selectedMessage.message}
@@ -1061,9 +1241,10 @@ const AdminDashboard = () => {
                 />
               </Box>
             </DialogContent>
-            <DialogActions sx={{ p: 2, gap: 1 }}>
+            <DialogActions sx={{ p: 2, gap: 1, flexDirection: isMobile ? 'column' : 'row' }}>
               {selectedMessage.status === 'unread' && (
                 <Button
+                  fullWidth={isMobile}
                   onClick={() => {
                     handleMarkAsRead(selectedMessage.id);
                     handleCloseMessageDetails();
@@ -1072,6 +1253,8 @@ const AdminDashboard = () => {
                   sx={{
                     background: 'linear-gradient(135deg, #4caf50 0%, #43a047 100%)',
                     color: 'white',
+                    textTransform: 'none',
+                    fontWeight: 600,
                     '&:hover': {
                       background: 'linear-gradient(135deg, #43a047 0%, #388e3c 100%)',
                     }
@@ -1081,20 +1264,32 @@ const AdminDashboard = () => {
                 </Button>
               )}
               <Button
+                fullWidth={isMobile}
                 onClick={() => {
                   handleDeleteMessage(selectedMessage.id);
                 }}
                 startIcon={<DeleteIcon />}
-                color="error"
+                sx={{
+                  background: 'linear-gradient(135deg, #f44336 0%, #e53935 100%)',
+                  color: 'white',
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #e53935 0%, #d32f2f 100%)',
+                  }
+                }}
               >
                 Delete
               </Button>
               <Button
+                fullWidth={isMobile}
                 onClick={handleCloseMessageDetails}
                 variant="outlined"
                 sx={{
                   borderColor: '#4A9FD5',
                   color: '#4A9FD5',
+                  textTransform: 'none',
+                  fontWeight: 600,
                   '&:hover': {
                     borderColor: '#4A9FD5',
                     background: 'rgba(137, 207, 240, 0.05)',
